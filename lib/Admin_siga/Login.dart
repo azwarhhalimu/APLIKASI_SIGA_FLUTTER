@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:siga2/Admin_siga/Api_admin/admLogin.dart';
 import 'package:siga2/Admin_siga/Dashbord.dart';
-import 'package:siga2/Admin_siga/enviroment.dart';
+import 'package:siga2/Admin_siga/ENVIROMENT.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/Loading_dialog.dart';
 import 'package:siga2/Componen/No_internet.dart';
@@ -64,7 +64,8 @@ class _LoginState extends State<Login> {
               "alamat": hapusSparasiLoginData(getUser["alamat"]),
             });
 
-            SharedPref().setData(token_login, jsonEncode(data_login));
+            SharedPref()
+                .setData(await Enviroment.getToken(), jsonEncode(data_login));
 
             Alert(context, "Sukses", "Login Berhasil").then((value) {
               Navigator.pushReplacement(context,
