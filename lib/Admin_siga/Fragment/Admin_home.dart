@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:siga2/Admin_siga/Api_admin/getHome_dashboard.dart';
 import 'package:siga2/Admin_siga/Api_admin/getTimeZone.dart';
 import 'package:siga2/Admin_siga/Fragment/part_home/Home_data_terpilah.dart';
@@ -9,7 +8,6 @@ import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Admin_siga/enviroment.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
-import 'package:siga2/Componen/Loading_dialog.dart';
 import 'package:siga2/Componen/No_internet.dart';
 import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Config.dart';
@@ -50,13 +48,15 @@ class _Admin_homeState extends State<Admin_home> {
   }
 
   void _getDashboard_home() {
-    setState(() {
-      isLoading = true;
-    });
-    getHomeDashboard(username, token, id_instansi).then((value) {
+    if (mounted)
       setState(() {
-        isLoading = false;
+        isLoading = true;
       });
+    getHomeDashboard(username, token, id_instansi).then((value) {
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
       if (value == "terjadi_masalah") {
         Alert(context, "Opzz", "Terjadi masalah");
       } else if (value == "no_internet") {
@@ -76,10 +76,17 @@ class _Admin_homeState extends State<Admin_home> {
             }));
           });
         } else {
-          if (mounted)
-            setState(() {
-              data_siga = jsonDecode(value)["data"];
+          String status = jsonDecode(value)["status"];
+          if (status == "token_invalid") {
+            Alert(context, "Terjadi masalah", "Invalid Token").then((value) {
+              Navigator.pushReplacementNamed(context, Login.routeName);
             });
+          } else {
+            if (mounted)
+              setState(() {
+                data_siga = jsonDecode(value)["data"];
+              });
+          }
         }
       }
     });
