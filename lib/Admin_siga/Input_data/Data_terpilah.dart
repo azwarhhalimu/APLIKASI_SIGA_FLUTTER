@@ -29,7 +29,7 @@ class _Data_terpilahState extends State<Data_terpilah> {
   }
 
   _init() async {
-    var getUser = await SharedPref().getData(token_login);
+    var getUser = await SharedPref().getData(await Enviroment.getToken());
     print(getUser);
   }
 
@@ -60,47 +60,57 @@ class _Data_terpilahState extends State<Data_terpilah> {
                 "Pilih Data Terpilah",
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
-              for (int i = 0; i < 20; i++)
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          CircleAvatar(
-                            child: Text(
-                              "20%",
-                              style: TextStyle(fontSize: 11),
-                            ),
-                          ),
-                          Text(
-                            "4/9",
-                            style: TextStyle(fontSize: 11),
-                          )
-                        ],
-                      ),
-                      Expanded(
-                          child: Container(
-                        margin: EdgeInsets.all(12),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Color.fromARGB(41, 250, 36, 122)),
-                        child: Text("DAta pegawai berdsarkan kelamin"),
-                      )),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            CupertinoIcons.chevron_right_circle_fill,
-                            color: Color.fromARGB(147, 0, 0, 0),
-                            size: 30,
-                          )),
-                    ],
-                  ),
-                )
+              for (int i = 0; i < 20; i++) List_admin_data_terpilah()
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class List_admin_data_terpilah extends StatelessWidget {
+  const List_admin_data_terpilah({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            children: [
+              CircleAvatar(
+                child: Text(
+                  "20%",
+                  style: TextStyle(fontSize: 11),
+                ),
+              ),
+              Text(
+                "4/9",
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          Expanded(
+              child: Container(
+            margin: EdgeInsets.all(12),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Color.fromARGB(41, 250, 36, 122)),
+            child: Text("DAta pegawai berdsarkan kelamin"),
+          )),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                CupertinoIcons.chevron_right_circle_fill,
+                color: Color.fromARGB(147, 0, 0, 0),
+                size: 30,
+              )),
+        ],
       ),
     );
   }

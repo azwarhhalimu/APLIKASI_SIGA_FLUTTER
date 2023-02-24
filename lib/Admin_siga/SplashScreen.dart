@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   String status = "";
 
   _cek() async {
-    await SharedPref().getData(token_login).then((value) async {
+    await SharedPref().getData(await Enviroment.getToken()).then((value) async {
       if (await value == "null" || await value == "" || await value == null) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: ((context) {
