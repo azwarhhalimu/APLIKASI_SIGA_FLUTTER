@@ -5,7 +5,6 @@ import 'package:siga2/Admin_siga/Api_admin/getHome_dashboard.dart';
 import 'package:siga2/Admin_siga/Api_admin/getTimeZone.dart';
 import 'package:siga2/Admin_siga/Fragment/part_home/Home_data_terpilah.dart';
 import 'package:siga2/Admin_siga/Login.dart';
-import 'package:siga2/Admin_siga/enviroment.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
 import 'package:siga2/Componen/No_internet.dart';
@@ -13,6 +12,8 @@ import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Config.dart';
 import 'package:siga2/Shimmer/Admin_shimmer/Shimmer_admin_home.dart';
 import 'package:flutter/material.dart';
+
+import '../ENVIROMENT.dart';
 
 class Admin_home extends StatefulWidget {
   Admin_home({super.key});
@@ -93,7 +94,7 @@ class _Admin_homeState extends State<Admin_home> {
   }
 
   _getLoginData() async {
-    var getData_login = await SharedPref().getData(token_login);
+    var getData_login = await SharedPref().getData(await Enviroment.getToken());
     Map<String, dynamic> getData = await jsonDecode(getData_login);
     setState(() {
       token = getData["token"];
