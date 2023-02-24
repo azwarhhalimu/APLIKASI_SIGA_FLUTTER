@@ -1,33 +1,29 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:siga2/Admin_siga/Api_admin/getTimeZone.dart';
-import 'package:siga2/Componen/Rc4.dart';
-import 'package:siga2/Config.dart';
-import 'package:encrypt/encrypt.dart';
+import 'package:siga2/Admin_siga/ENVIROMENT.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+import 'package:siga2/Componen/SharedPref.dart';
+import 'package:siga2/Config.dart';
 
-Future<String> getHomeDashboard(String id_instansi) async {
+Future<String> getHomeDashboard(
+  String username,
+  String token,
+  String id_instansi,
+) async {
   Uri uri = Uri.parse(baseUrl("api_siga_admin/get_home_dashboard"));
+  var time = await SharedPref().getData("time_zone");
 
-  getTimeZone().then((value) async {
-    try {
-      var respon = await http.post(uri,
-          body: {"id_instansi": random() + id_instansi},
-          headers: {"Authorization": "Bearer " + ""});
+  String header =
+      base64_genarete(username + "." + token + "." + time.toString(), 8);
 
-      if (respon.statusCode == 200) {
-        return respon.body;
-      }
-      return "terjadi_masalah";
-    } on TimeoutException catch (e) {
-      print("TimeoutException ${e}");
-    } on Error catch (e) {
-      print("TimeoutException ${e}");
-    } on Exception catch (e) {
-      print("Exception ${e}");
-    }
-    return "no_internet";
-  });
+  id_instansi = base64_genarete(id_instansi, 2);
+  var respon = await http.post(uri,
+      headers: {"Authorization": "Bearer " + header},
+      body: {"id_instansi": id_instansi});
+  if (respon.statusCode == 200) {
+    return respon.body;
+  }
+
   return "terjadi_masalah";
 }

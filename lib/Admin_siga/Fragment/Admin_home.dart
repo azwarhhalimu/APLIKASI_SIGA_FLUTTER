@@ -3,7 +3,9 @@ import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:siga2/Admin_siga/Api_admin/getHome_dashboard.dart';
+import 'package:siga2/Admin_siga/Api_admin/getTimeZone.dart';
 import 'package:siga2/Admin_siga/Fragment/part_home/Home_data_terpilah.dart';
+import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Admin_siga/enviroment.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
@@ -27,41 +29,100 @@ class _Admin_homeState extends State<Admin_home> {
   String alamat = "";
   String id_instansi = "";
   String url = "";
+  String token = "";
   bool isLoading = false;
   List data_siga = [];
+  String? getLoginData = "";
+
+  @override
+  void initState() {
+    load();
+    super.initState();
+  }
+
+  load() async {
+    setState(() {
+      isLoading = true;
+    });
+    await _getLoginData();
+    await _getTime();
+    _getDashboard_home();
+  }
+
+  void _getDashboard_home() {
+    setState(() {
+      isLoading = true;
+    });
+    getHomeDashboard(username, token, id_instansi).then((value) {
+      setState(() {
+        isLoading = false;
+      });
+      if (value == "terjadi_masalah") {
+        Alert(context, "Opzz", "Terjadi masalah");
+      } else if (value == "no_internet") {
+        showModalBottomSheet(
+            context: context,
+            builder: ((context) {
+              return No_internet(click: _getTime());
+            }));
+      } else {
+        String status = jsonDecode(value)["status"];
+        if (status == "invalid_token") {
+          Alert(context, "Indvalid Token", "Anda harus login lagi")
+              .then((value) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return Login();
+            }));
+          });
+        } else {
+          if (mounted)
+            setState(() {
+              data_siga = jsonDecode(value)["data"];
+            });
+        }
+      }
+    });
+  }
 
   _getLoginData() async {
-    SharedPreferences getData = await SharedPreferences.getInstance();
-    String? getLoginData = await getData.getString(token_login);
-    var data = jsonDecode(getLoginData!);
+    var getData_login = await SharedPref().getData(token_login);
+    Map<String, dynamic> getData = await jsonDecode(getData_login);
     setState(() {
-      id_instansi = data["id_instansi"];
-      nama_instansi = data["nama_instansi"];
-      username = data["username"];
-      alamat = data["alamat"];
+      token = getData["token"];
+      nama_instansi = getData["nama_instansi"];
+      username = getData["username"];
+      alamat = getData["alamat"];
+      id_instansi = getData["id_instansi"];
       url = baseUrl("images/logo?f=" + id_instansi + "&w=100&h=100");
     });
   }
 
-  _getData() {
-    getHomeDashboard(id_instansi).then((value) {
-      print("hasil ${value}");
+// yang di kopi
+  int percobaan_login = 0;
+  _getTime() async {
+    await getTimeZone().then((value) async {
+      if (value == "no_internet") {
+        _getTime();
+        if (percobaan_login > 3) {
+          showModalBottomSheet(
+              context: context,
+              builder: ((context) {
+                return No_internet(click: _getLoginData());
+              }));
+        } else {
+          percobaan_login = 0;
+        }
+        percobaan_login++;
+      } else if (value == "terjadi_masalah") {
+        Alert(context, "Opzz..", "Terjadi masalah");
+      } else {
+        await SharedPref().setData("time_zone", value);
+        //sukses
+
+        //callback kopi
+      }
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getLoginData();
-    _getData();
-
-    // TODO: implement initState
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override
@@ -81,7 +142,7 @@ class _Admin_homeState extends State<Admin_home> {
                     width: 30,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 14,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,6 +156,13 @@ class _Admin_homeState extends State<Admin_home> {
                       ),
                       Text(
                         nama_aplikasi,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 11,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        "Kota Baubau, Sulawesi Tenggara",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 11,
@@ -174,7 +242,7 @@ class _Admin_homeState extends State<Admin_home> {
                     width: MediaQuery.of(context).size.width,
                     child: isLoading
                         ? Shimmer_admin_home()
-                        : Home_data_terpilah(data: []),
+                        : Home_data_terpilah(data: data_siga),
                   )
                 ],
               ),

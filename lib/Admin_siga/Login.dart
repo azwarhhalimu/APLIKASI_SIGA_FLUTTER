@@ -46,6 +46,7 @@ class _LoginState extends State<Login> {
             String data_loginx = (jsonDecode(value)["data"]).substring(10);
             data_loginx = utf8.decode(base64.decode(data_loginx));
             Map<String, dynamic> getUser = jsonDecode(data_loginx);
+            print(data_loginx);
 
             //data ydaang di get yaitu
             //  - token
@@ -242,5 +243,14 @@ class _LoginState extends State<Login> {
         ],
       ),
     );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

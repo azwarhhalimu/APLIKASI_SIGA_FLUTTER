@@ -66,6 +66,13 @@ class _Buku_tamuState extends State<Buku_tamu> {
   bool isLoading = false;
 
   @override
+  void dispose() {
+    _getData();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

@@ -18,5 +18,6 @@ Future<String> getVideo() async {
   } on TimeoutException catch (e) {
     print("TimeoutException ${e}");
   }
+
   return "no_internet";
 }

@@ -3,6 +3,9 @@ import 'package:siga2/Admin_siga/Fragment/Admin_presenting_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:siga2/Admin_siga/Input_data/Data_terpilah.dart';
+import 'package:siga2/Componen/No_internet.dart';
+import 'package:siga2/Halaman_pengguna/Fragment/Home/Pilih_tahun.dart';
 
 class Dashboard extends StatefulWidget {
   static String routeName = "/admin_dashboard";
@@ -18,6 +21,18 @@ class _DashboardState extends State<Dashboard> {
     Admin_home(),
     Admin_preseting_data(),
   ];
+
+  void _pilihTahun(String id_tahun, String tahun) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return Data_terpilah(
+          id_tahun: id_tahun,
+          tahun: tahun,
+        );
+      },
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +62,14 @@ class _DashboardState extends State<Dashboard> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Pilih_tahun(callBack: _pilihTahun);
+            },
+          );
+        },
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

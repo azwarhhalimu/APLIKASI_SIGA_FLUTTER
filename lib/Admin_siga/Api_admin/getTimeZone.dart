@@ -1,11 +1,30 @@
+import 'dart:async';
+import 'dart:convert';
+
 import "package:http/http.dart" as http;
 import 'package:siga2/Config.dart';
 
 Future<String> getTimeZone() async {
   Uri uri = Uri.parse(baseUrl("auth/gtz"));
-  var respon = await http.post(uri);
-  if (respon.statusCode == 200) {
-    return respon.body;
+
+  try {
+    var respon = await http.post(uri);
+    if (respon.statusCode == 200) {
+      String getTime = jsonDecode(respon.body)["hasil"];
+      String time = getTime;
+      for (int i = 0; i < 5; i++) {
+        time = utf8.decode(base64.decode(time));
+      }
+      return time;
+    }
+
+    return "terjadi_masalah";
+  } on TimeoutException catch (e) {
+    print("TimeoutException ${e}");
+  } on Error catch (e) {
+    print("Error ${e}");
+  } on Exception catch (e) {
+    print("Exception ${e}");
   }
-  return "terjadi_masalah";
+  return "no_internet";
 }

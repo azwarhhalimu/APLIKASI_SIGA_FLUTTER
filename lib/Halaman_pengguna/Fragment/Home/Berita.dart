@@ -84,6 +84,7 @@ class _BeritaState extends State<Berita> {
 
   @override
   void dispose() {
+    _getBeranda();
     mounted;
 
     // TODO: implement dispose

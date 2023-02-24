@@ -5,7 +5,7 @@ class SharedPref {
   setData(String name, String value) async {
     SharedPreferences pref = await _prefs;
     await pref.setString(name, value);
-    print("pref saved");
+    print("[pref saved]");
   }
 
   Future<String> getData(String name) async {

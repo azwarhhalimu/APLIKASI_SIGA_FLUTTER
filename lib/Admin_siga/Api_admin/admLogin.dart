@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Config.dart';
 import "package:http/http.dart" as http;
+import 'package:uuid/uuid.dart';
 
 Future<String> admLogin(String username, String password) async {
   Uri uri = Uri.parse(baseUrl("auth/login"));
 
+  var uuid = Uuid().v1();
   try {
     var respon = await http.post(
       uri,
@@ -27,5 +29,6 @@ Future<String> admLogin(String username, String password) async {
   } on TimeoutException catch (e) {
     print("TimeoutException ${e}");
   }
+
   return "no_internet";
 }
