@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
               "alamat": hapusSparasiLoginData(getUser["alamat"]),
             });
 
-            SharedPref()
+            await SharedPref()
                 .setData(await Enviroment.getToken(), jsonEncode(data_login));
 
             Alert(context, "Sukses", "Login Berhasil").then((value) {

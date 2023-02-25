@@ -4,7 +4,8 @@ import 'package:siga2/Config.dart';
 
 import 'package:http/http.dart' as http;
 
-Future<String> admGetDataTerpilah(String id_instansi, String header) async {
+Future<String> admGetDataTerpilah(
+    String id_instansi, String header, String tahun, String id_tahun) async {
   Uri uri = Uri.parse(baseUrl("api_siga_admin/get_data_terpilah"));
 
   try {

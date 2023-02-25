@@ -28,6 +28,11 @@ class _Pilih_tahunState extends State<Pilih_tahun> {
             .then((value) {
           _getTahun();
         });
+      }
+      if (value == "no_internet") {
+        Alert(context, "Ooppz", "No Internet koneksi").then((value) {
+          getTahun();
+        });
       } else {
         setState(() {
           data_tahun = jsonDecode(value)["data"];
@@ -108,9 +113,11 @@ class _Pilih_tahunState extends State<Pilih_tahun> {
           SizedBox(
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        Navigator.pop(context);
+                      },
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text("Tutup"),

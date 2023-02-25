@@ -8,6 +8,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/admGet_data_teprilah.dart';
 import 'package:siga2/Admin_siga/ENVIROMENT.dart';
+import 'package:siga2/Admin_siga/Input_data/Adm_Indikator_kuisioner.dart';
 import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/No_internet.dart';
@@ -48,7 +49,12 @@ class _Data_terpilahState extends State<Data_terpilah> {
     String header = await a.createHeaderToken();
     Map<String, dynamic> dataLogin = await a.getLoginData();
     String id_instansi = dataLogin["id_instansi"];
-    admGetDataTerpilah(dataLogin["id_instansi"], header).then((value) {
+    admGetDataTerpilah(
+      dataLogin["id_instansi"],
+      header,
+      widget.tahun,
+      widget.id_tahun,
+    ).then((value) {
       if (mounted)
         setState(() {
           isLoading = false;
@@ -60,7 +66,8 @@ class _Data_terpilahState extends State<Data_terpilah> {
             context: context,
             builder: ((context) {
               return No_internet(
-                  click: admGetDataTerpilah(id_instansi, header));
+                  click: admGetDataTerpilah(
+                      id_instansi, header, widget.tahun, widget.id_tahun));
             }));
       } else {
         String status = jsonDecode(value)["status"];
@@ -87,6 +94,19 @@ class _Data_terpilahState extends State<Data_terpilah> {
         }
       }
     });
+  }
+
+  _navigasi_ke_data_terpilah(String id_data_terpilah, String data_terpilah) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return Adm_Indikator_kuisioner(
+          id_data_terpilah: id_data_terpilah,
+          data_terpilah: data_terpilah,
+          id_tahun: widget.id_tahun,
+          tahun: widget.tahun,
+        );
+      },
+    ));
   }
 
   @override
@@ -138,11 +158,19 @@ class _Data_terpilahState extends State<Data_terpilah> {
                               padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  color: Color.fromARGB(41, 250, 36, 122)),
+                                  color: i % 2 == 0
+                                      ? Color.fromARGB(41, 250, 36, 122)
+                                      : Color.fromARGB(41, 68, 36, 250)),
                               child: Text(data_terpilah[i]["data_terpilah"]),
                             )),
                             IconButton(
-                                onPressed: () {},
+                                tooltip: "Pilh Data",
+                                onPressed: () {
+                                  _navigasi_ke_data_terpilah(
+                                    data_terpilah[i]["id_data_terpilah"],
+                                    data_terpilah[i]["data_terpilah"],
+                                  );
+                                },
                                 icon: Icon(
                                   CupertinoIcons.chevron_right_circle_fill,
                                   color: Color.fromARGB(147, 0, 0, 0),
