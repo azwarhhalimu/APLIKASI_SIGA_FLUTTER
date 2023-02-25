@@ -21,30 +21,43 @@ class _Halaman_utamaState extends State<Halaman_utama> {
     Tentang(),
   ];
   int selected = 0;
+
+  _pop() {
+    if (selected > 0) {
+      setState(() {
+        selected = 0;
+      });
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: fragment[selected],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {
-          setState(() {
-            selected = value;
-          });
-        },
-        currentIndex: selected,
-        selectedLabelStyle: TextStyle(fontSize: 12),
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.image_outlined), label: "Galeri"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.data_array), label: "Data Siga"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.info_outline), label: "Tentang"),
-        ],
-      ),
-    );
+    return WillPopScope(
+        child: Scaffold(
+          body: fragment[selected],
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (value) {
+              setState(() {
+                selected = value;
+              });
+            },
+            currentIndex: selected,
+            selectedLabelStyle: TextStyle(fontSize: 12),
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home_outlined), label: "Home"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.image_outlined), label: "Galeri"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.data_array), label: "Data Siga"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.info_outline), label: "Tentang"),
+            ],
+          ),
+        ),
+        onWillPop: () async {
+          return _pop();
+        });
   }
 }
