@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/admGetIndikatorKuisioner.dart';
+import 'package:siga2/Admin_siga/Input_data/Adm_input_kuisioner.dart';
 import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Shimmer/Admin_shimmer/Shimmer_admin_home.dart';
@@ -81,6 +82,23 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
     });
   }
 
+  void _input(String id_indikator_kuisioner, String indikator_kuisioner) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Adm_input_kuisioner(
+          data_terpilah: widget.data_terpilah,
+          indikator_kuisioner: indikator_kuisioner,
+          id_indikator_kuisioner: id_indikator_kuisioner,
+          id_data_terpilah: widget.id_data_terpilah,
+          tahun: widget.tahun,
+          id_tahun: widget.id_tahun,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,7 +163,12 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
                         ),
                         trailing: IconButton(
                           icon: Icon(Icons.add),
-                          onPressed: () {},
+                          onPressed: () {
+                            _input(
+                              data[i]["id_indikator_kuisioner"],
+                              data[i]["indikator_kuisioner"],
+                            );
+                          },
                         ),
                       )
                   ],
