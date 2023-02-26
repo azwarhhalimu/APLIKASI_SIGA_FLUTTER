@@ -12,18 +12,24 @@ Future<String> getHomeDashboard(
   String id_instansi,
 ) async {
   Uri uri = Uri.parse(baseUrl("api_siga_admin/get_home_dashboard"));
-  var time = await SharedPref().getData("time_zone");
 
-  String header =
-      base64_genarete(username + "." + token + "." + time.toString(), 8);
+  String header = token;
 
   id_instansi = base64_genarete(id_instansi, 2);
-  var respon = await http.post(uri,
-      headers: {"Authorization": "Bearer " + header},
-      body: {"id_instansi": id_instansi});
-  if (respon.statusCode == 200) {
-    return respon.body;
+  try {
+    var respon = await http.post(uri,
+        headers: {"Authorization": token}, body: {"id_instansi": id_instansi});
+    if (respon.statusCode == 200) {
+      return respon.body;
+    }
+    return "terjadi_masalah";
+  } on TimeoutException catch (e) {
+    print("TimeoutException ${e}");
+  } on ErrorCallbackHandler catch (e) {
+    print("error ${e}");
+  } on Exception catch (e) {
+    print("Exception ${e}");
   }
 
-  return "terjadi_masalah";
+  return "no_internet";
 }

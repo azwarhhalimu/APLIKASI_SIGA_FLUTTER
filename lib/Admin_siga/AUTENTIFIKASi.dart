@@ -26,6 +26,9 @@ class Autentifikasi {
         percobaan_login++;
       } else if (value == "terjadi_masalah") {
         Alert(context, "Opzz..", "Terjadi masalah");
+      } else if (value == "no_internet") {
+        print("[get tmz no internet]");
+        getTime(context, call_back);
       } else {
         await SharedPref().setData("time_zone", value);
         print("Auth sukses");

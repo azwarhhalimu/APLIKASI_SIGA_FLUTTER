@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/getHome_dashboard.dart';
 import 'package:siga2/Admin_siga/Api_admin/getTimeZone.dart';
 import 'package:siga2/Admin_siga/Fragment/part_home/Home_data_terpilah.dart';
@@ -48,12 +49,18 @@ class _Admin_homeState extends State<Admin_home> {
     _getDashboard_home();
   }
 
-  void _getDashboard_home() {
+  void _getDashboard_home() async {
     if (mounted)
       setState(() {
         isLoading = true;
       });
-    getHomeDashboard(username, token, id_instansi).then((value) {
+
+    var auth = Autentifikasi();
+    await auth.getTime(context, null);
+    String header = await auth.createHeaderToken();
+    Map<String, dynamic> dataLogin = await auth.getLoginData();
+    getHomeDashboard(dataLogin["username"], header, dataLogin["id_instansi"])
+        .then((value) {
       if (mounted)
         setState(() {
           isLoading = false;

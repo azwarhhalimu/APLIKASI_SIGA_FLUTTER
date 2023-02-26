@@ -6,7 +6,9 @@ import 'package:encrypt/encrypt.dart';
 import 'package:percentify/components/RectCircularPercentify.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/admGet_data_teprilah.dart';
+import 'package:siga2/Admin_siga/Fragment/part_presenting_data/Adm_lihat_indikator_kuisioner.dart';
 import 'package:siga2/Api_http/getTahun.dart';
+import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Shimmer/Admin_shimmer/Shimmer_admin_home.dart';
 
 class Admin_preseting_data extends StatefulWidget {
@@ -38,9 +40,8 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
   _getData() async {
     var a = Autentifikasi();
     await a.getTime(context, null);
-
-    Map<String, dynamic> dataLogin = (await a.getLoginData());
     String header = await a.createHeaderToken();
+    Map<String, dynamic> dataLogin = (await a.getLoginData());
 
     await admGetDataTerpilah(
             dataLogin["id_instansi"], header, nama_tahun, id_tahun)
@@ -48,9 +49,18 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
       setState(() {
         isLoading = false;
       });
-      setState(() {
-        data = jsonDecode(value)["data"];
-      });
+      if (value == "token_invalid") {
+        Alert(context, "Invalid Token", "Silahkan login ulang");
+      } else if (value == "terjadi_masalah") {
+        Alert(context, "Oppzz", "Internnal server bermasalah");
+      } else {
+        String status = jsonDecode(value)["status"];
+        if (status == "data_ok") {
+          setState(() {
+            data = jsonDecode(value)["data"];
+          });
+        }
+      }
     });
   }
 
@@ -70,6 +80,21 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
   }
 
   bool isLoading = false;
+
+  void _lihat_indikator_data_terpilah(
+      String id_data_terpilah, String id_tahun, String data_terpilah) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return Adm_lihat_indikator_kuisioner(
+          id_data_terpilah: id_data_terpilah,
+          id_tahun: id_tahun,
+          data_terpilah: data_terpilah,
+          tahun: nama_tahun,
+        );
+      },
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,7 +213,12 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
                                   children: [
                                     Text(setData["data_terpilah"]),
                                     TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _lihat_indikator_data_terpilah(
+                                              setData["id_data_terpilah"],
+                                              id_tahun,
+                                              setData["data_terpilah"]);
+                                        },
                                         child: Text(
                                           "Lihat Data",
                                           style: TextStyle(color: Colors.black),
