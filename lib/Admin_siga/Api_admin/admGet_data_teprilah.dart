@@ -11,10 +11,14 @@ Future<String> admGetDataTerpilah(
   try {
     var respon = await http.post(
       uri,
-      body: {"id_instansi": await base64_genarete(id_instansi, 2)},
+      body: {
+        "id_instansi": await base64_genarete(id_instansi, 2),
+        "id_tahun": await base64_genarete(id_tahun, 2)
+      },
       headers: {"Authorization": header},
     );
 
+    print(respon.body);
     if (respon.statusCode == 200) {
       return respon.body;
     }

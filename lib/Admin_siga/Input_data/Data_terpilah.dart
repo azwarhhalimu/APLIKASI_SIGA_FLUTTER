@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:pie_chart/pie_chart.dart';
+import 'package:percentify/components/RectCircularPercentify.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/admGet_data_teprilah.dart';
 import 'package:siga2/Admin_siga/ENVIROMENT.dart';
@@ -106,7 +106,9 @@ class _Data_terpilahState extends State<Data_terpilah> {
           tahun: widget.tahun,
         );
       },
-    ));
+    )).then((value) => {
+          if (value == "refresh") {_init()}
+        });
   }
 
   @override
@@ -138,19 +140,33 @@ class _Data_terpilahState extends State<Data_terpilah> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Column(
-                              children: [
-                                CircleAvatar(
-                                  child: Text(
-                                    "20%",
-                                    style: TextStyle(fontSize: 11),
+                            Container(
+                              width: 60,
+                              height: 60,
+                              child: RectCircularPercentify(
+                                  (data_terpilah[i]["persentase"])
+                                      .toDouble(), // the value of progress
+                                  backgroundColor:
+                                      Color.fromARGB(255, 138, 138, 138),
+                                  valueColor: data_terpilah[i]["persentase"] ==
+                                          0
+                                      ? Color.fromARGB(255, 253, 39, 35)
+                                      : data_terpilah[i]["persentase"] > 20
+                                          ? Color.fromARGB(255, 213, 94, 30)
+                                          : Color.fromARGB(255, 35, 125, 253),
+                                  strokeWidth: 3,
+                                  child: SizedBox(
+                                    child: Text(
+                                      data_terpilah[i]["persentase"]
+                                              .toString() +
+                                          "%",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.red,
+                                          fontSize: 10),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  "4/9",
-                                  style: TextStyle(fontSize: 11),
-                                )
-                              ],
+                                  valueStrokeWidth: 6),
                             ),
                             Expanded(
                                 child: Container(

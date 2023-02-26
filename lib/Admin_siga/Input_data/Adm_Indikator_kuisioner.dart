@@ -47,7 +47,7 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
         isLoading = true;
       });
     var auth = Autentifikasi();
-    auth.getTime(context, init);
+    await auth.getTime(context, init);
     Map<String, dynamic> loginData = await auth.getLoginData();
     String id_instansi = loginData["id_instansi"];
     String haeder = await auth.createHeaderToken();
@@ -82,6 +82,8 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
     });
   }
 
+  String refresh = "";
+
   void _input(String id_indikator_kuisioner, String indikator_kuisioner) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -96,13 +98,24 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
           id_tahun: widget.id_tahun,
         );
       },
-    );
+    ).then((value) {
+      if (value == "refresh") {
+        init();
+        refresh = value;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context, refresh);
+          },
+          icon: Icon(Icons.close),
+        ),
         title: Text(
           "Input Data Tahun " + widget.tahun,
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
@@ -154,8 +167,8 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Laki-laki : 23"),
-                                  Text("Perempuan : 13"),
+                                  Text("Laki-laki : ${data[i]['laki_laki']}"),
+                                  Text("Perempuan :  ${data[i]['perempuan']}"),
                                 ],
                               )
                             ],

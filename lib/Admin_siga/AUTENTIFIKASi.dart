@@ -10,7 +10,7 @@ import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Config.dart';
 
 class Autentifikasi {
-  void getTime(BuildContext context, dynamic call_back) async {
+  Future<dynamic> getTime(BuildContext context, dynamic call_back) async {
     int percobaan_login = 0;
     await getTimeZone().then((value) async {
       if (value == "no_internet") {

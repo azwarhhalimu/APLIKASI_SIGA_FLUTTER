@@ -19,6 +19,7 @@ Future<String> admGetIndikatorKuisioner(
       "id_tahun": await base64_genarete(id_tahun, 4),
     });
 
+    print(respon.body);
     if (respon.statusCode == 200) {
       return respon.body;
     }
