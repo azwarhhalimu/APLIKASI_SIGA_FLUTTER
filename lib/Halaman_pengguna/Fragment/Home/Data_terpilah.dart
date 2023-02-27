@@ -92,11 +92,45 @@ class _Data_terpilahState extends State<Data_terpilah> {
   }
 
   String a = "0";
+  bool isSearch = false;
+  String cari = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: !isSearch
+            ? Container()
+            : SizedBox(
+                height: 35,
+                child: TextField(
+                  onChanged: (value) => setState(() {
+                    cari = value;
+                  }),
+                  style: const TextStyle(fontSize: 13, color: Colors.black54),
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      contentPadding: EdgeInsets.only(
+                          left: 15, right: 15, top: 4, bottom: 4),
+                      hintText: "Masukkan pencarian",
+                      hintStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder()),
+                ),
+              ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isSearch = isSearch ? false : true;
+                });
+              },
+              icon: Icon(isSearch ? Icons.close : Icons.search))
+        ],
+      ),
       body: Container(
         height: double.infinity,
         child: loading
@@ -111,54 +145,60 @@ class _Data_terpilahState extends State<Data_terpilah> {
                     ),
                   ),
                   for (int i = 0; i < data.length; i++)
-                    ListTile(
-                      leading: Text(((i + 1).toString())),
-                      title: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: (i % 2 == 0)
-                                ? Color.fromARGB(86, 241, 152, 28)
-                                : Color.fromARGB(44, 214, 26, 186),
-                            borderRadius: BorderRadius.circular(6)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              data[i]["data_terpilah"],
-                              style: TextStyle(fontSize: 14),
+                    (data[i]["data_terpilah"])
+                            .toString()
+                            .toLowerCase()
+                            .contains(cari.toLowerCase())
+                        ? ListTile(
+                            leading: Text(((i + 1).toString())),
+                            title: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: (i % 2 == 0)
+                                      ? Color.fromARGB(86, 241, 152, 28)
+                                      : Color.fromARGB(44, 214, 26, 186),
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data[i]["data_terpilah"],
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Label Data:" + data[i]["label_table"],
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Label Data:" + data[i]["label_table"],
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ),
-                      trailing: InkWell(
-                        onTap: () {
-                          _pilihTahun();
-                          setState(() {
-                            // untuk menyimpan secara sementara data terpilah yang akan di Kirim(
-                            //   ke indikatir
+                            trailing: InkWell(
+                              onTap: () {
+                                _pilihTahun();
+                                setState(() {
+                                  // untuk menyimpan secara sementara data terpilah yang akan di Kirim(
+                                  //   ke indikatir
 
-                            pilih_data_terpilah = data[i]["data_terpilah"];
-                            pilih_id_data_terpilah =
-                                data[i]["id_data_terpilah"];
-                            label_table = data[i]["label_table"];
-                          });
-                        },
-                        child: CircleAvatar(
-                          child: Icon(
-                            Icons.chevron_right_rounded,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: Colors.black45,
-                        ),
-                      ),
-                    )
+                                  pilih_data_terpilah =
+                                      data[i]["data_terpilah"];
+                                  pilih_id_data_terpilah =
+                                      data[i]["id_data_terpilah"];
+                                  label_table = data[i]["label_table"];
+                                });
+                              },
+                              child: CircleAvatar(
+                                child: Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: Colors.white,
+                                ),
+                                backgroundColor: Colors.black45,
+                              ),
+                            ),
+                          )
+                        : Container()
                 ],
               ),
       ),

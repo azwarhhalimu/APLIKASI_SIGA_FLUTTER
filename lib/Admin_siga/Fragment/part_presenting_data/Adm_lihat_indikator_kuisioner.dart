@@ -88,7 +88,7 @@ class _Adm_lihat_indikator_kuisionerState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Lihat Data Tahun",
+          "Lihat Data Tahun ${widget.tahun}",
           style: TextStyle(fontSize: 13),
         ),
         bottom: PreferredSize(
@@ -130,16 +130,60 @@ class _Adm_lihat_indikator_kuisionerState
                                   style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
                                 Divider(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(data[i]["data"]["tahun"]),
-                                    Text(data[i]["data"]["laki_laki"]),
-                                    Text(data[i]["data"]["perempuan"]),
-                                    Text("Total : ${data[i]["data"]["total"]}"),
-                                  ],
-                                )
+                                !semua_tahun
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Expanded(
+                                              child: Text(
+                                                  data[i]["data"]["tahun"])),
+                                          Expanded(
+                                              child: Text(data[i]["data"]
+                                                  ["laki_laki"])),
+                                          Expanded(
+                                              child: Text(data[i]["data"]
+                                                  ["perempuan"])),
+                                          Expanded(
+                                            child: Text(
+                                                "Total : ${data[i]["data"]["total"]}"),
+                                          ),
+                                        ],
+                                      )
+                                    : Column(children: [
+                                        for (int j = 0;
+                                            j < data[i]["semua_tahun"].length;
+                                            j++)
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  data[i]["semua_tahun"][j]
+                                                      ["tahun"],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Text(data[i]
+                                                        ["semua_tahun"][j]
+                                                    ["laki_laki"]),
+                                              ),
+                                              Expanded(
+                                                child: Text(data[i]
+                                                        ["semua_tahun"][j]
+                                                    ["perempuan"]),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                    "Total : ${data[i]["semua_tahun"][j]["total"]}"),
+                                              ),
+                                            ],
+                                          )
+                                      ])
                               ],
                             ),
                           )
@@ -163,10 +207,10 @@ class _Adm_lihat_indikator_kuisionerState
                       ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              semua_tahun = true;
+                              semua_tahun = semua_tahun ? false : true;
                             });
                           },
-                          child: Text("Semua Tahun")),
+                          child: Text(semua_tahun ? "Kembali" : "Semua Tahun")),
                     ],
                   ),
                 )

@@ -84,6 +84,7 @@ class _Data_terpilahState extends State<Data_terpilah> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
         title: Text(
           widget.kategori_data_terpilah,
           style: TextStyle(fontSize: 13),

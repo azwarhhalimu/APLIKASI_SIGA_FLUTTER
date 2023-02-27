@@ -14,16 +14,9 @@ class Autentifikasi {
     int percobaan_login = 0;
     await getTimeZone().then((value) async {
       if (value == "no_internet") {
-        if (percobaan_login > 3) {
-          showModalBottomSheet(
-              context: context,
-              builder: ((context) {
-                return No_internet(click: call_back);
-              }));
-        } else {
-          percobaan_login = 0;
-        }
-        percobaan_login++;
+        Alert(context, "oppzz", "No Internet").then((value) {
+          getTime(context, call_back);
+        });
       } else if (value == "terjadi_masalah") {
         Alert(context, "Opzz..", "Terjadi masalah");
       } else if (value == "no_internet") {
@@ -31,7 +24,7 @@ class Autentifikasi {
         getTime(context, call_back);
       } else {
         await SharedPref().setData("time_zone", value);
-        print("Auth sukses");
+        print("TZ SUKSES");
         //sukses
 
         //callback kopi
@@ -40,7 +33,7 @@ class Autentifikasi {
   }
 
   Future<dynamic> createHeaderToken() async {
-    String getToken = await SharedPref().getData(Enviroment.getToken());
+    String getToken = await SharedPref().getData(await Enviroment.getToken());
     String timezone = await SharedPref().getData("time_zone");
 
     Map<String, dynamic> token = await jsonDecode(getToken);
@@ -52,8 +45,8 @@ class Autentifikasi {
   }
 
   Future<dynamic> getLoginData() async {
-    Map<String, dynamic> data_login =
-        jsonDecode(await SharedPref().getData(Enviroment.getToken()));
+    Map<String, dynamic> data_login = await jsonDecode(
+        await SharedPref().getData(await Enviroment.getToken()));
     return data_login;
   }
 }

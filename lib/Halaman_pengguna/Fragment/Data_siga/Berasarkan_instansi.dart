@@ -51,28 +51,76 @@ class _Berasarkan_instansiState extends State<Berasarkan_instansi> {
     super.initState();
   }
 
+  String cari = "";
+
   @override
   Widget build(BuildContext context) {
     return isLoading
         ? Shimmer_data_terpilah()
-        : ListView(
+        : Column(
             children: [
-              for (int i = 0; i < data.length; i++)
-                List_item_berdasarkan_instansi(
-                  images: data[i]["images"],
-                  jumlah_data: data[i]["jumlah_data"].toString(),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: ((context) {
-                      return Data_terpilah(
-                          id_instansi: data[i]["id_instansi"],
-                          nama_instansi: data[i]["nama_instansi"]);
-                    })));
-                  },
-                  id_instansi: data[i]["id_instansi"],
-                  index: i,
-                  nama_instansi: data[i]["nama_instansi"],
-                )
+              Container(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  top: 10,
+                  bottom: 10,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "Cari",
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 35,
+                        child: TextFormField(
+                          onChanged: (value) => setState(() {
+                            cari = value;
+                          }),
+                          style: TextStyle(fontSize: 13),
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(5),
+                              suffixIcon: Icon(Icons.search),
+                              hintText: "Masukkan pencarian anda",
+                              border: OutlineInputBorder()),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    for (int i = 0; i < data.length; i++)
+                      (data[i]["nama_instansi"])
+                              .toString()
+                              .toLowerCase()
+                              .contains(cari.toLowerCase())
+                          ? List_item_berdasarkan_instansi(
+                              images: data[i]["images"],
+                              jumlah_data: data[i]["jumlah_data"].toString(),
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: ((context) {
+                                  return Data_terpilah(
+                                      id_instansi: data[i]["id_instansi"],
+                                      nama_instansi: data[i]["nama_instansi"]);
+                                })));
+                              },
+                              id_instansi: data[i]["id_instansi"],
+                              index: i,
+                              nama_instansi: data[i]["nama_instansi"],
+                            )
+                          : Container()
+                  ],
+                ),
+              ),
             ],
           );
   }

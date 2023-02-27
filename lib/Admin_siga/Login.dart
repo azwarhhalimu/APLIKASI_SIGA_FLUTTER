@@ -33,11 +33,9 @@ class _LoginState extends State<Login> {
         if (value == "terjadi_masalah") {
           Alert(context, "OPpzzz", "Terjadi masalah pada internal server");
         } else if (value == "no_internet") {
-          showModalBottomSheet(
-              context: context,
-              builder: ((context) {
-                return No_internet(click: _login);
-              }));
+          Alert(context, "No Internet", "Coba lagi ya").then((value) {
+            _login();
+          });
         } else {
           String status = jsonDecode(value)["status"];
 
@@ -96,100 +94,106 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: [
           Container(
+            height: double.infinity,
             padding: EdgeInsets.all(30),
             width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/logo_siga2.png",
-                  width: MediaQuery.of(context).size.width * 0.5,
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Text(
-                    "Silahkan login untuk melanjutkan",
-                    textAlign: TextAlign.left,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 50,
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Form(
-                    key: globaKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          validator: (value) {
-                            if (value == "") return "Tidak boleh kosong";
-                          },
-                          onChanged: ((value) {
-                            username = value;
-                          }),
-                          decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.person),
-                              hintText: "Username",
-                              border: OutlineInputBorder(),
-                              label: Text("Masukkan username anda")),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          obscureText: _obsecured,
-                          keyboardType: TextInputType.visiblePassword,
-                          onChanged: ((value) {
-                            password = value;
-                          }),
-                          validator: (value) {
-                            if (value == "") return "Tidak boleh kosong";
-                          },
-                          decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.password),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _obsecured = !_obsecured;
-                                  });
+                  Image.asset(
+                    "assets/images/logo_siga2.png",
+                    width: MediaQuery.of(context).size.width * 0.5,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: Text(
+                      "Silahkan login untuk melanjutkan",
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Form(
+                      key: globaKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            validator: (value) {
+                              if (value == "") return "Tidak boleh kosong";
+                            },
+                            onChanged: ((value) {
+                              username = value;
+                            }),
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Username",
+                                border: OutlineInputBorder(),
+                                label: Text("Masukkan username anda")),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            obscureText: _obsecured,
+                            keyboardType: TextInputType.visiblePassword,
+                            onChanged: ((value) {
+                              password = value;
+                            }),
+                            validator: (value) {
+                              if (value == "") return "Tidak boleh kosong";
+                            },
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.password),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obsecured = !_obsecured;
+                                    });
+                                  },
+                                  child: Icon(!_obsecured
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility),
+                                ),
+                                hintText: "Ketikkan password anda",
+                                border: OutlineInputBorder(),
+                                label: Text("Password")),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  _login();
                                 },
-                                child: Icon(!_obsecured
-                                    ? Icons.visibility_off_rounded
-                                    : Icons.visibility),
-                              ),
-                              hintText: "Ketikkan password anda",
-                              border: OutlineInputBorder(),
-                              label: Text("Password")),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                _login();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text("Login"),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Jika anda belum memiliki username dan password, silahkan untuk menguhubungi " +
-                              nama_aplikasi,
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Color.fromARGB(123, 0, 0, 0)),
-                        )
-                      ],
-                    )),
-              ],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text("Login"),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Jika anda belum memiliki username dan password, silahkan untuk menguhubungi " +
+                                nama_aplikasi,
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Color.fromARGB(123, 0, 0, 0)),
+                          )
+                        ],
+                      )),
+                ],
+              ),
             ),
           ),
           keyVisbiliti > 0

@@ -33,46 +33,104 @@ class _DashboardState extends State<Dashboard> {
     ));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: fragmen[aktif_fragmen],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {
-          setState(() {
-            aktif_fragmen = value;
-          });
-        },
-        currentIndex: aktif_fragmen,
-        type: BottomNavigationBarType.fixed,
-        selectedFontSize: 14,
-        unselectedFontSize: 14,
-        items: [
-          BottomNavigationBarItem(label: "Home", icon: Icon(Icons.dashboard)),
-          BottomNavigationBarItem(
-            label: "Presenting Data",
-            activeIcon: SvgPicture.asset("assets/icon/trend.svg",
-                width: 25, height: 25, color: Colors.blue),
-            icon: SvgPicture.asset(
-              "assets/icon/trend.svg",
-              width: 25,
-              height: 25,
+  _pop() {
+    if (aktif_fragmen > 0) {
+      setState(() {
+        aktif_fragmen = 0;
+      });
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return Container(
+            height: 200,
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.info,
+                  color: Colors.red,
+                  size: 50,
+                ),
+                Text(
+                  "Apakah anda ingin keluar ?",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            child: Text("Ya, Keluar"))),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Tidak jadi")))
+                  ],
+                )
+              ],
             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Pilih_tahun(callBack: _pilihTahun);
-            },
           );
         },
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+        child: Scaffold(
+          body: fragmen[aktif_fragmen],
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (value) {
+              setState(() {
+                aktif_fragmen = value;
+              });
+            },
+            currentIndex: aktif_fragmen,
+            type: BottomNavigationBarType.fixed,
+            selectedFontSize: 14,
+            unselectedFontSize: 14,
+            items: [
+              BottomNavigationBarItem(
+                  label: "Home", icon: Icon(Icons.dashboard)),
+              BottomNavigationBarItem(
+                label: "Presenting Data",
+                activeIcon: SvgPicture.asset("assets/icon/trend.svg",
+                    width: 25, height: 25, color: Colors.blue),
+                icon: SvgPicture.asset(
+                  "assets/icon/trend.svg",
+                  width: 25,
+                  height: 25,
+                ),
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Pilih_tahun(callBack: _pilihTahun);
+                },
+              );
+            },
+            child: Icon(Icons.add),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+        ),
+        onWillPop: () => _pop());
   }
 }

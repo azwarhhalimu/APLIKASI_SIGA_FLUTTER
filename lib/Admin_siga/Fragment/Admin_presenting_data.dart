@@ -121,6 +121,7 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
                 PopupMenuButton(
                   onSelected: (index) {
                     setState(() {
+                      isLoading = true;
                       nama_tahun = tahun[index]["tahun"];
                       id_tahun = tahun[index]["id_tahun"];
                       _getData();
