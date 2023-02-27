@@ -83,6 +83,10 @@ class _Admin_homeState extends State<Admin_home> {
               return Login();
             }));
           });
+        } else if (value == "token_expired") {
+          Alert(context, "Failad Auth", "Token Expired").then((value) {
+            Navigator.pushReplacementNamed(context, Login.routeName);
+          });
         } else {
           String status = jsonDecode(value)["status"];
           if (status == "token_invalid") {

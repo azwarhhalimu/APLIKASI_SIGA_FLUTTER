@@ -111,6 +111,7 @@ class _Data_terpilahState extends State<Data_terpilah> {
         });
   }
 
+  String cari = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,79 +126,135 @@ class _Data_terpilahState extends State<Data_terpilah> {
               padding: const EdgeInsets.all(15.0),
               child: Shimmer_admin_home(),
             )
-          : SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Pilih Data Terpilah",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+          : Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: SizedBox(
+                    height: 42,
+                    child: TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          cari = value;
+                        });
+                      },
+                      style: TextStyle(fontSize: 14),
+                      decoration: InputDecoration(
+                          suffix: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  cari = "";
+                                });
+                              },
+                              icon: Icon(
+                                Icons.close,
+                                size: 20,
+                              )),
+                          prefixIcon:
+                              InkWell(onTap: () {}, child: Icon(Icons.search)),
+                          hintText: "Masukkan pencarian anda...",
+                          border: OutlineInputBorder()),
                     ),
-                    for (int i = 0; i < data_terpilah.length; i++)
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              width: 60,
-                              height: 60,
-                              child: RectCircularPercentify(
-                                  (data_terpilah[i]["persentase"])
-                                      .toDouble(), // the value of progress
-                                  backgroundColor:
-                                      Color.fromARGB(255, 138, 138, 138),
-                                  valueColor: data_terpilah[i]["persentase"] ==
-                                          0
-                                      ? Color.fromARGB(255, 253, 39, 35)
-                                      : data_terpilah[i]["persentase"] > 20
-                                          ? Color.fromARGB(255, 213, 94, 30)
-                                          : Color.fromARGB(255, 35, 125, 253),
-                                  strokeWidth: 3,
-                                  child: SizedBox(
-                                    child: Text(
-                                      data_terpilah[i]["persentase"]
-                                              .toString() +
-                                          "%",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.red,
-                                          fontSize: 10),
-                                    ),
-                                  ),
-                                  valueStrokeWidth: 6),
-                            ),
-                            Expanded(
-                                child: Container(
-                              margin: EdgeInsets.all(12),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: i % 2 == 0
-                                      ? Color.fromARGB(41, 250, 36, 122)
-                                      : Color.fromARGB(41, 68, 36, 250)),
-                              child: Text(data_terpilah[i]["data_terpilah"]),
-                            )),
-                            IconButton(
-                                tooltip: "Pilh Data",
-                                onPressed: () {
-                                  _navigasi_ke_data_terpilah(
-                                    data_terpilah[i]["id_data_terpilah"],
-                                    data_terpilah[i]["data_terpilah"],
-                                  );
-                                },
-                                icon: Icon(
-                                  CupertinoIcons.chevron_right_circle_fill,
-                                  color: Color.fromARGB(147, 0, 0, 0),
-                                  size: 30,
-                                )),
-                          ],
-                        ),
-                      )
-                  ],
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Pilih Data Terpilah",
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                          for (int i = 0; i < data_terpilah.length; i++)
+                            (data_terpilah[i]["data_terpilah"])
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(cari.toLowerCase())
+                                ? Container(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          width: 60,
+                                          height: 60,
+                                          child: RectCircularPercentify(
+                                              (data_terpilah[i]["persentase"])
+                                                  .toDouble(), // the value of progress
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 138, 138, 138),
+                                              valueColor: data_terpilah[i]
+                                                          ["persentase"] ==
+                                                      0
+                                                  ? Color.fromARGB(
+                                                      255, 253, 39, 35)
+                                                  : data_terpilah[i]
+                                                              ["persentase"] >
+                                                          20
+                                                      ? Color.fromARGB(
+                                                          255, 213, 94, 30)
+                                                      : Color.fromARGB(
+                                                          255, 35, 125, 253),
+                                              strokeWidth: 3,
+                                              child: SizedBox(
+                                                child: Text(
+                                                  data_terpilah[i]["persentase"]
+                                                          .toString() +
+                                                      "%",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.red,
+                                                      fontSize: 10),
+                                                ),
+                                              ),
+                                              valueStrokeWidth: 6),
+                                        ),
+                                        Expanded(
+                                            child: Container(
+                                          margin: EdgeInsets.all(12),
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              color: i % 2 == 0
+                                                  ? Color.fromARGB(
+                                                      41, 250, 36, 122)
+                                                  : Color.fromARGB(
+                                                      41, 68, 36, 250)),
+                                          child: Text(data_terpilah[i]
+                                              ["data_terpilah"]),
+                                        )),
+                                        IconButton(
+                                            tooltip: "Pilh Data",
+                                            onPressed: () {
+                                              _navigasi_ke_data_terpilah(
+                                                data_terpilah[i]
+                                                    ["id_data_terpilah"],
+                                                data_terpilah[i]
+                                                    ["data_terpilah"],
+                                              );
+                                            },
+                                            icon: Icon(
+                                              CupertinoIcons
+                                                  .chevron_right_circle_fill,
+                                              color:
+                                                  Color.fromARGB(147, 0, 0, 0),
+                                              size: 30,
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                : Container()
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }

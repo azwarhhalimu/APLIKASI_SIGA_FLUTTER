@@ -2,9 +2,9 @@
     package="com.example.siga2">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="siga2"
+        android:label="Siga Kota Baubau"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"

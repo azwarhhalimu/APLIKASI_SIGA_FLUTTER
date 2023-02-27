@@ -1,10 +1,13 @@
+import 'package:siga2/Admin_siga/ENVIROMENT.dart';
 import 'package:siga2/Admin_siga/Fragment/Admin_home.dart';
 import 'package:siga2/Admin_siga/Fragment/Admin_presenting_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:siga2/Admin_siga/Input_data/Data_terpilah.dart';
+import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/No_internet.dart';
+import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home/Pilih_tahun.dart';
 
 class Dashboard extends StatefulWidget {
@@ -16,6 +19,20 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  check() async {
+    var dataLogin = await SharedPref().getData(await Enviroment.getToken());
+    if (dataLogin == null) {
+      Alert(context, "Login", "logn");
+    }
+  }
+
+  @override
+  void initState() {
+    check();
+    // TODO: implement initState
+    super.initState();
+  }
+
   int aktif_fragmen = 0;
   List fragmen = [
     Admin_home(),

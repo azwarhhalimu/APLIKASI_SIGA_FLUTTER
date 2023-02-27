@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Data_siga.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Galeri.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home.dart';
@@ -27,7 +28,48 @@ class _Halaman_utamaState extends State<Halaman_utama> {
       setState(() {
         selected = 0;
       });
-    } else {}
+    } else {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.all(40),
+            height: 270,
+            child: Column(
+              children: [
+                Icon(
+                  Icons.info_rounded,
+                  color: Colors.red,
+                  size: 60,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text("Apakah anda ini keluar dari aplikasi ini?"),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Jangan dulu")),
+                    ElevatedButton(
+                        onPressed: () {
+                          SystemNavigator.pop();
+                        },
+                        child: Text("Ya Keluar"))
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+      );
+    }
   }
 
   @override

@@ -1,5 +1,5 @@
 class Enviroment {
   static String getToken() {
-    return "token";
+    return "token_kdf";
   }
 }

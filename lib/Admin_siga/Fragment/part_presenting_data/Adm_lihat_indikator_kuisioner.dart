@@ -105,7 +105,7 @@ class _Adm_lihat_indikator_kuisionerState
       body: isLoading
           ? Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Shimmer_admin_home(),
+              child: SingleChildScrollView(child: Shimmer_admin_home()),
             )
           : Column(
               children: [

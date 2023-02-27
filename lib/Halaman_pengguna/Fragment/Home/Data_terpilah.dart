@@ -125,6 +125,7 @@ class _Data_terpilahState extends State<Data_terpilah> {
           IconButton(
               onPressed: () {
                 setState(() {
+                  cari = "";
                   isSearch = isSearch ? false : true;
                 });
               },

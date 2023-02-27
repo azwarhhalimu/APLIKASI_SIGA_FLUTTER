@@ -7,6 +7,7 @@ import 'package:percentify/components/RectCircularPercentify.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/admGet_data_teprilah.dart';
 import 'package:siga2/Admin_siga/Fragment/part_presenting_data/Adm_lihat_indikator_kuisioner.dart';
+import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Api_http/getTahun.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Shimmer/Admin_shimmer/Shimmer_admin_home.dart';
@@ -46,13 +47,19 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
     await admGetDataTerpilah(
             dataLogin["id_instansi"], header, nama_tahun, id_tahun)
         .then((value) {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
       if (value == "token_invalid") {
         Alert(context, "Invalid Token", "Silahkan login ulang");
       } else if (value == "terjadi_masalah") {
         Alert(context, "Oppzz", "Internnal server bermasalah");
+      } else if (value == "token_expired") {
+        Alert(context, "Invalid Expired", "Silahkan login ulang").then((value) {
+          Navigator.pushReplacementNamed(context, Login.routeName);
+        });
       } else {
         String status = jsonDecode(value)["status"];
         if (status == "data_ok") {
@@ -171,7 +178,7 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               gradient: LinearGradient(
-                                stops: [0.16, 0.1],
+                                stops: [0.17, 0.1],
                                 colors: index % 2 == 0
                                     ? [
                                         Color.fromARGB(73, 69, 33, 231),

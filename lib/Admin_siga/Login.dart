@@ -10,6 +10,7 @@ import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:siga2/Halaman_pengguna/Halaman_utama.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -85,169 +86,177 @@ class _LoginState extends State<Login> {
     }
   }
 
+  _pop() {
+    //Navigator.pushReplacementNamed(context, Halaman_utama.routeName);
+  }
+
   bool _obsecured = true;
 
   @override
   Widget build(BuildContext context) {
     double keyVisbiliti = MediaQuery.of(context).viewInsets.bottom;
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: double.infinity,
-            padding: EdgeInsets.all(30),
-            width: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Image.asset(
-                    "assets/images/logo_siga2.png",
-                    width: MediaQuery.of(context).size.width * 0.5,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    child: Text(
-                      "Silahkan login untuk melanjutkan",
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Form(
-                      key: globaKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            validator: (value) {
-                              if (value == "") return "Tidak boleh kosong";
-                            },
-                            onChanged: ((value) {
-                              username = value;
-                            }),
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.person),
-                                hintText: "Username",
-                                border: OutlineInputBorder(),
-                                label: Text("Masukkan username anda")),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            obscureText: _obsecured,
-                            keyboardType: TextInputType.visiblePassword,
-                            onChanged: ((value) {
-                              password = value;
-                            }),
-                            validator: (value) {
-                              if (value == "") return "Tidak boleh kosong";
-                            },
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.password),
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _obsecured = !_obsecured;
-                                    });
-                                  },
-                                  child: Icon(!_obsecured
-                                      ? Icons.visibility_off_rounded
-                                      : Icons.visibility),
-                                ),
-                                hintText: "Ketikkan password anda",
-                                border: OutlineInputBorder(),
-                                label: Text("Password")),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  _login();
+    return WillPopScope(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              Container(
+                height: double.infinity,
+                padding: EdgeInsets.all(30),
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Image.asset(
+                        "assets/images/logo_siga2.png",
+                        width: MediaQuery.of(context).size.width * 0.5,
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: Text(
+                          "Silahkan login untuk melanjutkan",
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Form(
+                          key: globaKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                validator: (value) {
+                                  if (value == "") return "Tidak boleh kosong";
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text("Login"),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Jika anda belum memiliki username dan password, silahkan untuk menguhubungi " +
-                                nama_aplikasi,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Color.fromARGB(123, 0, 0, 0)),
-                          )
-                        ],
-                      )),
-                ],
+                                onChanged: ((value) {
+                                  username = value;
+                                }),
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.person),
+                                    hintText: "Username",
+                                    border: OutlineInputBorder(),
+                                    label: Text("Masukkan username anda")),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                obscureText: _obsecured,
+                                keyboardType: TextInputType.visiblePassword,
+                                onChanged: ((value) {
+                                  password = value;
+                                }),
+                                validator: (value) {
+                                  if (value == "") return "Tidak boleh kosong";
+                                },
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.password),
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _obsecured = !_obsecured;
+                                        });
+                                      },
+                                      child: Icon(!_obsecured
+                                          ? Icons.visibility_off_rounded
+                                          : Icons.visibility),
+                                    ),
+                                    hintText: "Ketikkan password anda",
+                                    border: OutlineInputBorder(),
+                                    label: Text("Password")),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      _login();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text("Login"),
+                                    )),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Jika anda belum memiliki username dan password, silahkan untuk menguhubungi " +
+                                    nama_aplikasi,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color.fromARGB(123, 0, 0, 0)),
+                              )
+                            ],
+                          )),
+                    ],
+                  ),
+                ),
               ),
-            ),
+              keyVisbiliti > 0
+                  ? Container()
+                  : Positioned(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: SvgPicture.asset(
+                          "assets/images/bg2.svg",
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                      bottom: 0,
+                    ),
+              keyVisbiliti > 0
+                  ? Container()
+                  : Positioned(
+                      child: Container(
+                        padding:
+                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "DINAS PEMBERDAYAAN DAN PERLINDUNGAN ANAK DAN PEREMPUAN ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "Kota Baubau, Sulawesi Tenggara",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      bottom: 5,
+                    ),
+              Positioned(
+                  top: 35,
+                  right: 15,
+                  child: TextButton.icon(
+                    icon: Icon(Icons.close),
+                    label: Text("Keluar"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ))
+            ],
           ),
-          keyVisbiliti > 0
-              ? Container()
-              : Positioned(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: SvgPicture.asset(
-                      "assets/images/bg2.svg",
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                  bottom: 0,
-                ),
-          keyVisbiliti > 0
-              ? Container()
-              : Positioned(
-                  child: Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "DINAS PEMBERDAYAAN DAN PERLINDUNGAN ANAK DAN PEREMPUAN ",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white),
-                        ),
-                        Text(
-                          "Kota Baubau, Sulawesi Tenggara",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 10, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                  bottom: 5,
-                ),
-          Positioned(
-              top: 35,
-              right: 15,
-              child: TextButton.icon(
-                icon: Icon(Icons.close),
-                label: Text("Keluar"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ))
-        ],
-      ),
-    );
+        ),
+        onWillPop: _pop());
   }
 }
 
