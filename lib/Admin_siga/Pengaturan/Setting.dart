@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
+import 'package:siga2/Admin_siga/Pengaturan/Logout.dart';
 import 'package:siga2/Admin_siga/Pengaturan/Ubah_password.dart';
 import 'package:siga2/Admin_siga/Pengaturan/Ubah_username.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
@@ -113,10 +114,10 @@ class _SettingState extends State<Setting> {
               Alert(
                 context,
                 "Tentang",
-                "SISTIM INFOMASI GENDER DAN ANAK\n\nVERSION ${VERSI}\nCompileD by Google Flutter ${FLUTTER_VERSI}",
+                "SISTIM INFOMASI GENDER DAN ANAK\n\nVERSION ${VERSI}\nCompiled by Google Flutter ${FLUTTER_VERSI}",
               );
             },
-            leading: Icon(Icons.details),
+            leading: Icon(Icons.info_outline),
             title: Text("Tentang Siga"),
             trailing: Icon(Icons.chevron_right),
           ),
@@ -135,13 +136,12 @@ class _SettingState extends State<Setting> {
               ),
               onPressed: () {
                 showModalBottomSheet(
+                    isDismissible: false,
+                    isScrollControlled: true,
                     context: context,
                     builder: (context) {
-                      return Container(
-                        child: Column(
-                          children: [Text("Apakah anda ingin logout?")],
-                        ),
-                      );
+                      return Logout();
+                      ;
                     });
               },
             ),

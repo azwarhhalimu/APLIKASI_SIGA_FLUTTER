@@ -47,7 +47,7 @@ class _Ubah_usernameState extends State<Ubah_username> {
 
   _update() async {
     if (_FomrController.currentState!.validate()) {
-      Loading_dialog(title: "Mengganti password...", context: context).show();
+      Loading_dialog(title: "Mengganti username...", context: context).show();
       var auth = Autentifikasi();
       await auth.getTime(context, _update);
       Map<String, dynamic> loginData = await auth.getLoginData();
@@ -79,6 +79,12 @@ class _Ubah_usernameState extends State<Ubah_username> {
                 .then((value) {
               Navigator.pushReplacementNamed(context, Login.routeName);
             });
+          } else if (status == "username_sama") {
+            Alert(context, "Gagal Terganti",
+                "Anda memasukkan username yang sama dengan username sebelumnya");
+          } else if (status == "username_sudah_digunakan") {
+            Alert(context, "Username Sudah Digunakan",
+                "Username yang anda masukkan sama dengan instansi lain. Harap masukkan username yang berbeda");
           } else if (status == "password_salah") {
             Alert(context, "Autentifikasi Gagal",
                 "Password yang anda masukkan salah");

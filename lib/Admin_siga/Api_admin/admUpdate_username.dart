@@ -13,7 +13,7 @@ Future<String> updateUsername(String data, String header) async {
       "Authorization": header,
     }, body: {
       "data": data
-    });
+    }).timeout(Duration(seconds: 5));
 
     print(respon.body);
     if (respon.statusCode == 200) {

@@ -10,6 +10,7 @@ class Tentang extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        automaticallyImplyLeading: false,
         title: Text(
           "Tentang Aplikasi",
           style: TextStyle(fontSize: 13),
@@ -56,7 +57,7 @@ class Tentang extends StatelessWidget {
               Alert(
                 context,
                 "Tentang",
-                "SISTIM INFOMASI GENDER DAN ANAK\n\nVERSION ${VERSI}\nCompileD by Google Flutter ${FLUTTER_VERSI}",
+                "SISTIM INFOMASI GENDER DAN ANAK\n\nVERSION ${VERSI}\nCompiled by Google Flutter ${FLUTTER_VERSI}",
               );
             }),
             child: Container(

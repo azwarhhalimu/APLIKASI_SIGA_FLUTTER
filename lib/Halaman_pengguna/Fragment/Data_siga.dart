@@ -17,6 +17,7 @@ class _Data_sigaState extends State<Data_siga> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           title: Text(
             "Kategori Data Terpilah",
