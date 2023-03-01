@@ -6,6 +6,7 @@ import 'package:siga2/Admin_siga/Api_admin/getHome_dashboard.dart';
 import 'package:siga2/Admin_siga/Api_admin/getTimeZone.dart';
 import 'package:siga2/Admin_siga/Fragment/part_home/Home_data_terpilah.dart';
 import 'package:siga2/Admin_siga/Login.dart';
+import 'package:siga2/Admin_siga/Pengaturan/Setting.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
 import 'package:siga2/Componen/No_internet.dart';
@@ -152,6 +153,18 @@ class _Admin_homeState extends State<Admin_home> {
           AppBar(
             automaticallyImplyLeading: false,
             elevation: 0,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Setting(),
+                      ));
+                },
+                icon: Icon(Icons.settings),
+              )
+            ],
             title: Container(
               width: double.infinity,
               child: Row(
@@ -163,31 +176,33 @@ class _Admin_homeState extends State<Admin_home> {
                   SizedBox(
                     width: 14,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Dashboard",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Dashboard",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                      Text(
-                        nama_aplikasi,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 11,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        "Kota Baubau, Sulawesi Tenggara",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 11,
-                            color: Colors.white),
-                      ),
-                    ],
+                        Text(
+                          nama_aplikasi,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 11,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          "Kota Baubau, Sulawesi Tenggara",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 11,
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

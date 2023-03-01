@@ -4,6 +4,7 @@
    <application
         android:label="Siga Kota Baubau"
         android:name="${applicationName}"
+       android:roundIcon="@mipmap/ic_launcher_rounded"
         android:icon="@mipmap/icon_launcher">
         <activity
             android:name=".MainActivity"

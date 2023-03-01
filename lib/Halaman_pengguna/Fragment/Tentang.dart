@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:siga2/Componen/AlertDialog.dart';
+import 'package:siga2/Config.dart';
 
 class Tentang extends StatelessWidget {
   const Tentang({super.key});
@@ -50,7 +52,13 @@ class Tentang extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: (() {}),
+            onTap: (() {
+              Alert(
+                context,
+                "Tentang",
+                "SISTIM INFOMASI GENDER DAN ANAK\n\nVERSION ${VERSI}\nCompileD by Google Flutter ${FLUTTER_VERSI}",
+              );
+            }),
             child: Container(
               decoration: BoxDecoration(
                   border: Border(

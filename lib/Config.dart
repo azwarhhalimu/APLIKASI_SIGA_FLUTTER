@@ -16,6 +16,9 @@ String baseUrl(String url) {
   return domain + "index.php/" + url;
 }
 
+String VERSI = "1.0.0";
+String FLUTTER_VERSI = "3.7.5";
+
 String nama_aplikasi = "Dinas Pemberdayaan Perempuan dan Perlindungan Anak";
 
 String encmd5(String input) {
@@ -87,11 +90,27 @@ Future<String> getTimeServer() async {
   return DateFormat("yy-MM-dd HH:mm:ss").format(DateTime.now());
 }
 
+String kunci(String text) {
+  List a = [
+    "A",
+  ];
+  List b = [
+    "z",
+  ];
+  String x = text;
+  for (int i = 0; i < a.length; i++) {
+    x = x.replaceAll(a[i], b[i]);
+  }
+  return x;
+}
+
 base64_genarete(String input, int opsi) {
   String hasil = input;
-  for (int i = 0; i < 4; i++) {
-    hasil = base64.encode(utf8.encode(input));
+  for (int i = 0; i < opsi; i++) {
+    hasil = base64.encode(utf8.encode(hasil));
   }
+
+  hasil = (hasil);
 
   return hasil;
 }

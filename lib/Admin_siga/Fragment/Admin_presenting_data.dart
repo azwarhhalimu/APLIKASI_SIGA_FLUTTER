@@ -63,9 +63,11 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
       } else {
         String status = jsonDecode(value)["status"];
         if (status == "data_ok") {
-          setState(() {
-            data = jsonDecode(value)["data"];
-          });
+          if (mounted) {
+            setState(() {
+              data = jsonDecode(value)["data"];
+            });
+          }
         }
       }
     });

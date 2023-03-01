@@ -8,6 +8,7 @@ import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/No_internet.dart';
 import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Config.dart';
+import 'package:siga2/Encryption.dart';
 
 class Autentifikasi {
   Future<dynamic> getTime(BuildContext context, dynamic call_back) async {
@@ -39,7 +40,8 @@ class Autentifikasi {
     Map<String, dynamic> token = await jsonDecode(getToken);
     String set_token =
         token["username"] + "." + token["token"] + "." + timezone;
-    set_token = "Bearer " + await base64_genarete(set_token, 8);
+    set_token = "Bearer " +
+        Encryption.instance.encrypt(await base64_genarete(set_token, 8));
     return set_token;
     ;
   }

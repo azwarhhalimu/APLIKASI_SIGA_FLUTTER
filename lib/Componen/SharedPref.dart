@@ -13,4 +13,11 @@ class SharedPref {
     String c = await pref.getString(name).toString();
     return c;
   }
+
+  Future<String> remove(String name) async {
+    SharedPreferences pref = await _prefs;
+    await pref.remove(name);
+
+    return "remove_sukses";
+  }
 }

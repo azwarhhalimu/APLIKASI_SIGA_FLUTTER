@@ -66,6 +66,7 @@ class _LoginState extends State<Login> {
             await SharedPref()
                 .setData(await Enviroment.getToken(), jsonEncode(data_login));
 
+            print(data_login);
             Alert(context, "Sukses", "Login Berhasil").then((value) {
               Navigator.pushReplacement(context,
                   new MaterialPageRoute(builder: ((context) {
@@ -87,7 +88,7 @@ class _LoginState extends State<Login> {
   }
 
   _pop() {
-    //Navigator.pushReplacementNamed(context, Halaman_utama.routeName);
+    Navigator.pushNamed(context, Halaman_utama.routeName);
   }
 
   bool _obsecured = true;
@@ -108,7 +109,7 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 50,
+                        height: 80,
                       ),
                       Image.asset(
                         "assets/images/logo_siga2.png",
@@ -212,7 +213,7 @@ class _LoginState extends State<Login> {
                           fit: BoxFit.fitWidth,
                         ),
                       ),
-                      bottom: 0,
+                      bottom: -10,
                     ),
               keyVisbiliti > 0
                   ? Container()
@@ -250,13 +251,19 @@ class _LoginState extends State<Login> {
                     icon: Icon(Icons.close),
                     label: Text("Keluar"),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return Halaman_utama();
+                        },
+                      ));
                     },
                   ))
             ],
           ),
         ),
-        onWillPop: _pop());
+        onWillPop: () {
+          return _pop();
+        });
   }
 }
 
