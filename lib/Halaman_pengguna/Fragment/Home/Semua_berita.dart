@@ -102,7 +102,8 @@ class _Semua_beritaState extends State<Semua_berita> {
                         children: [
                           Text(
                             setData["judul_berita"],
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 14),
                           ),
                           Text(
                             setData["tanggal"],
