@@ -18,16 +18,19 @@ class Adm_input_kuisioner extends StatefulWidget {
   String id_indikator_kuisioner;
   String id_tahun;
   String tahun;
+  String laki_laki;
+  String perempuan;
 
-  Adm_input_kuisioner({
-    super.key,
-    required this.data_terpilah,
-    required this.indikator_kuisioner,
-    required this.id_data_terpilah,
-    required this.id_indikator_kuisioner,
-    required this.id_tahun,
-    required this.tahun,
-  });
+  Adm_input_kuisioner(
+      {super.key,
+      required this.data_terpilah,
+      required this.indikator_kuisioner,
+      required this.id_data_terpilah,
+      required this.id_indikator_kuisioner,
+      required this.id_tahun,
+      required this.tahun,
+      required this.laki_laki,
+      required this.perempuan});
 
   @override
   State<Adm_input_kuisioner> createState() => _Adm_input_kuisionerState();
@@ -115,6 +118,7 @@ class _Adm_input_kuisionerState extends State<Adm_input_kuisioner> {
                           children: [
                             Text("Laki-laki"),
                             TextFormField(
+                              initialValue: widget.laki_laki,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
@@ -143,6 +147,8 @@ class _Adm_input_kuisionerState extends State<Adm_input_kuisioner> {
                           children: [
                             Text("perempuan"),
                             TextFormField(
+                              initialValue: widget.perempuan,
+                              keyboardType: TextInputType.number,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],

@@ -4,6 +4,7 @@ import 'package:siga2/Api_http/getVideo.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
 import 'package:siga2/Componen/No_internet.dart';
+import 'package:siga2/Config.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home/Lihat_video.dart';
 import 'package:siga2/Shimmer/Shimmer_video.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class _VideoState extends State<Video> {
           setState(() {
             data = jsonDecode(value)["data"];
           });
+        print(data);
       }
     });
   }
@@ -73,8 +75,9 @@ class _VideoState extends State<Video> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: ((context) {
                               return Lihat_video(
-                                id_video: data[i]["id_vidoe"],
-                                judul: data[i]["judul"],
+                                id_video: data[i]["id_video"],
+                                title: data[i]["judul"],
+                                id_youtube: data[i]["id_youtube"],
                               );
                             })));
                           },

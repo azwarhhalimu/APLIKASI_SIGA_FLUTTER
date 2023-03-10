@@ -6,6 +6,7 @@ import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/EncRc4.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home/Lihat_semua_instansi.dart';
+import 'package:siga2/Halaman_pengguna/Fragment/Home/Semua_berita.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Part_page/Berita_utama.dart';
 import 'package:siga2/List_item/list_item_banner_home.dart';
 import 'package:siga2/List_item/list_item_berita_home.dart';
@@ -84,9 +85,7 @@ class _BeritaState extends State<Berita> {
 
   @override
   void dispose() {
-    if (mounted) {
-      _getBeranda();
-    }
+    if (mounted) {}
     // TODO: implement dispose
     super.dispose();
   }
@@ -290,10 +289,24 @@ class _BeritaState extends State<Berita> {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 15, top: 15),
-                  child: Text(
-                    "Berita Terbaru",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Berita Terbaru",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Semua_berita(),
+                                ));
+                          },
+                          child: Text("Lihat Semua"))
+                    ],
                   ),
                 ),
                 SizedBox(

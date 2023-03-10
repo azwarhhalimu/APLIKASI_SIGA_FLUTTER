@@ -81,36 +81,47 @@ class _Semua_beritaState extends State<Semua_berita> {
                 var setData = data[index];
                 return Container(
                   margin: EdgeInsets.only(bottom: 10, top: 10),
-                  child: ListTile(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Baca_berita(id_berita: setData["id_berita"]);
+                  child: Column(
+                    children: [
+                      ListTile(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return Baca_berita(
+                                    id_berita: setData["id_berita"]);
+                              },
+                            ));
                           },
-                        ));
-                      },
-                      trailing: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ImageNetwork(
-                            url: setData["img"], height_gambar: 80),
-                        width: 80,
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            setData["judul_berita"],
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 14),
+                          trailing: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ImageNetwork(
+                                url: setData["img"], height_gambar: 80),
+                            width: 80,
                           ),
-                          Text(
-                            setData["tanggal"],
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      )),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                setData["judul_berita"],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 14),
+                              ),
+                              Text(
+                                setData["tanggal"],
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          )),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        width: double.infinity,
+                        height: 2,
+                        color: Colors.black12,
+                      )
+                    ],
+                  ),
                 );
               },
             ),

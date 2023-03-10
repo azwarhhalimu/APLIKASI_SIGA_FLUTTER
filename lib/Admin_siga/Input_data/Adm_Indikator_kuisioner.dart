@@ -74,6 +74,7 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
               data = jsonDecode(value)["data"];
             });
           }
+          print(data);
         } else {
           Alert(context, "Error", "Token tidak valid. Silahkan login kembali")
               .then((value) => Navigator.pushNamed(context, Login.routeName));
@@ -84,7 +85,8 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
 
   String refresh = "";
 
-  void _input(String id_indikator_kuisioner, String indikator_kuisioner) {
+  void _input(String id_indikator_kuisioner, String indikator_kuisioner,
+      String laki_laki, String perempuan) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -96,6 +98,8 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
           id_data_terpilah: widget.id_data_terpilah,
           tahun: widget.tahun,
           id_tahun: widget.id_tahun,
+          laki_laki: laki_laki,
+          perempuan: perempuan,
         );
       },
     ).then((value) {
@@ -167,8 +171,14 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Laki-laki : ${data[i]['laki_laki']}"),
-                                  Text("Perempuan :  ${data[i]['perempuan']}"),
+                                  Text(
+                                    "Laki-laki : ${data[i]['laki_laki']}",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  Text(
+                                    "Perempuan :  ${data[i]['perempuan']}",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
                                 ],
                               )
                             ],
@@ -180,6 +190,8 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
                             _input(
                               data[i]["id_indikator_kuisioner"],
                               data[i]["indikator_kuisioner"],
+                              data[i]["laki_laki"],
+                              data[i]["perempuan"],
                             );
                           },
                         ),

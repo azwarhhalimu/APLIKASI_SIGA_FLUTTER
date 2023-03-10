@@ -21,6 +21,11 @@ String FLUTTER_VERSI = "3.7.5";
 
 String nama_aplikasi = "Dinas Pemberdayaan Perempuan dan Perlindungan Anak";
 
+String getIdYoutube(String url) {
+  return url.replaceAll(
+      "https://dp3akotabaubau.com/index.php/images/youtube_image?f=", "");
+}
+
 String encmd5(String input) {
   List<int> inputBytes = utf8.encode(input);
 
