@@ -1,4 +1,4 @@
-package com.example.siga2
+package com.lxbuton.baubau.siga.azwar
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -63,6 +63,7 @@ class _GaleriState extends State<Galeri> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "Galeri Foto",
           style: TextStyle(fontSize: 15),

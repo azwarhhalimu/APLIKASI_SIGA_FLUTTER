@@ -31,10 +31,12 @@ class _TentangState extends State<Tentang> {
         data = jsonDecode(value);
         if (int.parse(packageInfo.buildNumber) < data["version"]) {
           showModalBottomSheet(
+            isScrollControlled: true,
             isDismissible: data['status'] == "wajib" ? false : true,
             context: context,
             builder: (context) {
               return Container(
+                height: 250,
                 padding: EdgeInsets.all(15),
                 child: Column(
                   children: [
@@ -90,6 +92,7 @@ class _TentangState extends State<Tentang> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: Text(
           "Tentang Aplikasi",

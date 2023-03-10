@@ -220,7 +220,7 @@ class _LoginState extends State<Login> {
                   : Positioned(
                       child: Container(
                         padding:
-                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                            EdgeInsets.only(left: 20, right: 20, bottom: 2),
                         width: MediaQuery.of(context).size.width,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
