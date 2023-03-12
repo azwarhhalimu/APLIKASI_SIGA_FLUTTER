@@ -81,6 +81,17 @@ class _Adm_input_kuisionerState extends State<Adm_input_kuisioner> {
   }
 
   @override
+  void initState() {
+    setState(() {
+      laki_laki = widget.laki_laki;
+      perempuan = widget.perempuan;
+    });
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(25),

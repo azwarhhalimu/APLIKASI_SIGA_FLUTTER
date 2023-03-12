@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lxbuton.baubau.siga.azwar">
+    package="com.lxbuton.repositoriunidayan">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="Siga Kota Baubau"
+        android:label="Data Siga Kota Baubau"
         android:name="${applicationName}"
        android:roundIcon="@mipmap/ic_launcher_round"
         android:icon="@mipmap/ic_launcher">
