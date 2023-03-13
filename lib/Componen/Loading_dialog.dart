@@ -10,6 +10,7 @@ class Loading_dialog {
 
   show() {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: ((context) {
           return AlertDialog(

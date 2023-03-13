@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
+import 'package:siga2/Admin_siga/ENVIROMENT.dart';
+import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Admin_siga/Pengaturan/Ubah_password.dart';
 import 'package:siga2/Admin_siga/Pengaturan/Ubah_username.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
+import 'package:siga2/Componen/SharedPref.dart';
 import 'package:siga2/Config.dart';
 
 class Setting extends StatefulWidget {
@@ -135,11 +138,46 @@ class _SettingState extends State<Setting> {
               ),
               onPressed: () {
                 showModalBottomSheet(
+                    isScrollControlled: true,
                     context: context,
                     builder: (context) {
                       return Container(
+                        height: 160,
+                        padding: EdgeInsets.all(15),
                         child: Column(
-                          children: [Text("Apakah anda ingin logout?")],
+                          children: [
+                            Icon(
+                              Icons.info,
+                              size: 50,
+                            ),
+                            Text("Apakah anda ingin logout?"),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Tidak")),
+                                ),
+                                Expanded(
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                      onPressed: () async {
+                                        SharedPref().remove(
+                                            await Enviroment.getToken());
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Login(),
+                                            ));
+                                      },
+                                      child: Text("Logout")),
+                                )
+                              ],
+                            )
+                          ],
                         ),
                       );
                     });
