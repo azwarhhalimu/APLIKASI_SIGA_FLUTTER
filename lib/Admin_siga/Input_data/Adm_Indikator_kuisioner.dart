@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/admGetIndikatorKuisioner.dart';
 import 'package:siga2/Admin_siga/Input_data/Adm_input_kuisioner.dart';
+import 'package:siga2/Admin_siga/Input_data/Adm_input_kuisioner_via_indikator.dart';
 import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Shimmer/Admin_shimmer/Shimmer_admin_home.dart';
@@ -86,21 +87,30 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
   String refresh = "";
 
   void _input(String id_indikator_kuisioner, String indikator_kuisioner,
-      String laki_laki, String perempuan) {
+      String laki_laki, String perempuan, List komponen_nilai) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return Adm_input_kuisioner(
-          data_terpilah: widget.data_terpilah,
-          indikator_kuisioner: indikator_kuisioner,
-          id_indikator_kuisioner: id_indikator_kuisioner,
-          id_data_terpilah: widget.id_data_terpilah,
-          tahun: widget.tahun,
-          id_tahun: widget.id_tahun,
-          laki_laki: laki_laki,
-          perempuan: perempuan,
-        );
+        if (komponen_nilai.length > 0) {
+          return Adm_input_input_kuisioner_via_indikator(
+            komponen_nilai: komponen_nilai,
+            id_data_terpilah: widget.id_data_terpilah,
+            id_tahun: widget.id_tahun,
+            id_indikator_kuisioner: id_indikator_kuisioner,
+          );
+        } else {
+          return Adm_input_kuisioner(
+            data_terpilah: widget.data_terpilah,
+            indikator_kuisioner: indikator_kuisioner,
+            id_indikator_kuisioner: id_indikator_kuisioner,
+            id_data_terpilah: widget.id_data_terpilah,
+            tahun: widget.tahun,
+            id_tahun: widget.id_tahun,
+            laki_laki: laki_laki,
+            perempuan: perempuan,
+          );
+        }
       },
     ).then((value) {
       if (value == "refresh") {
@@ -188,11 +198,11 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
                           icon: Icon(Icons.add),
                           onPressed: () {
                             _input(
-                              data[i]["id_indikator_kuisioner"],
-                              data[i]["indikator_kuisioner"],
-                              data[i]["laki_laki"],
-                              data[i]["perempuan"],
-                            );
+                                data[i]["id_indikator_kuisioner"],
+                                data[i]["indikator_kuisioner"],
+                                data[i]["laki_laki"],
+                                data[i]["perempuan"],
+                                data[i]["komponen_nilai"]);
                           },
                         ),
                       )
