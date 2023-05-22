@@ -40,11 +40,12 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
+
   <div id="loading"></div>
     <script>
       window.addEventListener('load', function(ev) {
         var loading = document.querySelector('#loading');
-        loading.textContent = "<br/<br/<br/><center>Loading entrypoint...</center>";
+        loading.textContent = "Loading entrypoint..";
         _flutter.loader.loadEntrypoint({
           serviceWorker: {
             serviceWorkerVersion: serviceWorkerVersion,
@@ -53,7 +54,7 @@
             loading.textContent = "Initializing engine...";
             let appRunner = await engineInitializer.initializeEngine();
 
-            loading.textContent = "<br/<br/<br/<center>Flutter Web Running app...</center>";
+            loading.textContent = "";
             await appRunner.runApp();
           }
         });
