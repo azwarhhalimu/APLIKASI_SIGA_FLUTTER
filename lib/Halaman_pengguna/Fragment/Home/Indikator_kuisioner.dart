@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:siga2/Admin_siga/Input_data/Widget_show_komponen.dart';
 import 'package:siga2/Api_http/getIndikator_kuisioner.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home/Pilih_tahun.dart';
@@ -141,22 +142,29 @@ class _Indikator_kuisionerState extends State<Indikator_kuisioner> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(data[i]["indikator_kuisioner"]),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Laki-laki : " + data[i]["laki_laki"],
-                                      style: TextStyle(
-                                          color: Colors.black38, fontSize: 13),
-                                    ),
-                                    Text(
-                                      "Perempuan : " + data[i]["perempuan"],
-                                      style: TextStyle(
-                                          color: Colors.black38, fontSize: 13),
-                                    ),
-                                  ],
-                                )
+                                data[i]["komponen_nilai"] != null
+                                    ? Widget_show_komponen(
+                                        data: data[i]["komponen_nilai"])
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Laki-laki : " +
+                                                data[i]["laki_laki"],
+                                            style: TextStyle(
+                                                color: Colors.black38,
+                                                fontSize: 13),
+                                          ),
+                                          Text(
+                                            "Perempuan : " +
+                                                data[i]["perempuan"],
+                                            style: TextStyle(
+                                                color: Colors.black38,
+                                                fontSize: 13),
+                                          ),
+                                        ],
+                                      )
                               ],
                             ),
                           ),

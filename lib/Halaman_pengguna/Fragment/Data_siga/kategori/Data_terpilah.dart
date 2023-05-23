@@ -48,6 +48,7 @@ class _Data_terpilahState extends State<Data_terpilah> {
 
   @override
   void initState() {
+    isSearch = false;
     _getData();
     // TODO: implement initState
     super.initState();
@@ -79,63 +80,99 @@ class _Data_terpilahState extends State<Data_terpilah> {
         }));
   }
 
+  String cari = "";
+
+  bool isSearch = false;
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
-        title: Text(
-          widget.kategori_data_terpilah,
-          style: TextStyle(fontSize: 13),
-        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isSearch = isSearch ? false : true;
+                });
+              },
+              icon: Icon(isSearch ? Icons.close : Icons.search))
+        ],
+        title: !isSearch
+            ? Text(
+                widget.kategori_data_terpilah,
+                style: TextStyle(fontSize: 13),
+              )
+            : TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    cari = value.toLowerCase();
+                  });
+                },
+                autofocus: true,
+                cursorColor: Colors.white,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    focusedBorder: null,
+                    fillColor: Colors.white,
+                    contentPadding: EdgeInsets.all(2),
+                    hintText: "Masukkan pencarian",
+                    focusColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.white)),
+              ),
       ),
       body: isLoading
           ? Shimmer_data_terpilah()
           : SingleChildScrollView(
               child: Column(children: [
                 for (int i = 0; i < data.length; i++)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        child: Text("${i + 1}"),
-                      ),
-                      title: Container(
-                        decoration: BoxDecoration(
-                            color: i % 2 == 0
-                                ? Color.fromARGB(99, 252, 197, 149)
-                                : Color.fromARGB(98, 159, 149, 252),
-                            borderRadius: BorderRadius.circular(6)),
-                        padding: EdgeInsets.all(5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              data[i]["data_terpilah"],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 14),
+                  data[i]["data_terpilah"]
+                          .toString()
+                          .toLowerCase()
+                          .contains(cari)
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              child: Text("${i + 1}"),
                             ),
-                            Text(
-                              "Sumber Data : " + data[i]["label_tabel"],
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.black26),
+                            title: Container(
+                              decoration: BoxDecoration(
+                                  color: i % 2 == 0
+                                      ? Color.fromARGB(99, 252, 197, 149)
+                                      : Color.fromARGB(98, 159, 149, 252),
+                                  borderRadius: BorderRadius.circular(6)),
+                              padding: EdgeInsets.all(5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data[i]["data_terpilah"],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  ),
+                                  Text(
+                                    "Sumber Data : " + data[i]["label_tabel"],
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.black26),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                      trailing: IconButton(
-                          color: Colors.black,
-                          onPressed: () {
-                            pLabel_tabel = data[i]["label_tabel"];
-                            pData_terpilah = data[i]["data_terpilah"];
-                            pId_instansi = data[i]["id_instansi"];
-                            pId_data_terpilah = data[i]['id_data_terpilah'];
-                            _pilihTahun();
-                          },
-                          icon: Icon(Icons.chevron_right_sharp)),
-                    ),
-                  )
+                            trailing: IconButton(
+                                color: Colors.black,
+                                onPressed: () {
+                                  pLabel_tabel = data[i]["label_tabel"];
+                                  pData_terpilah = data[i]["data_terpilah"];
+                                  pId_instansi = data[i]["id_instansi"];
+                                  pId_data_terpilah =
+                                      data[i]['id_data_terpilah'];
+                                  _pilihTahun();
+                                },
+                                icon: Icon(Icons.chevron_right_sharp)),
+                          ),
+                        )
+                      : Container()
               ]),
             ),
     );
