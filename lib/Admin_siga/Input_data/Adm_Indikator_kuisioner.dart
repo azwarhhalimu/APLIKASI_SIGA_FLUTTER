@@ -39,6 +39,7 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
   @override
   void initState() {
     init();
+    isSearch = false;
     // TODO: implement initState
     super.initState();
   }
@@ -99,6 +100,8 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
             id_data_terpilah: widget.id_data_terpilah,
             id_tahun: widget.id_tahun,
             id_indikator_kuisioner: id_indikator_kuisioner,
+            indikator_kuisioner: indikator_kuisioner,
+            data_terpilah: widget.data_terpilah,
           );
         } else {
           return Adm_input_kuisioner(
@@ -121,6 +124,8 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
     });
   }
 
+  bool isSearch = false;
+  String cari = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,12 +134,37 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
           onPressed: () {
             Navigator.pop(context, refresh);
           },
-          icon: Icon(Icons.close),
+          icon: Icon(Icons.chevron_left),
         ),
-        title: Text(
-          "Input Data Tahun " + widget.tahun,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
+        title: isSearch
+            ? TextFormField(
+                autofocus: true,
+                onChanged: (e) {
+                  setState(() {
+                    cari = e.toLowerCase();
+                  });
+                },
+                style: TextStyle(color: Colors.white, fontSize: 14),
+                decoration: InputDecoration(
+                    hintText: "Masukkan pencarian",
+                    fillColor: Colors.white,
+                    prefixIconColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.white),
+                    prefixIcon: Icon(Icons.search)),
+              )
+            : Text(
+                "Input Data Tahun " + widget.tahun,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isSearch = isSearch ? false : true;
+                });
+              },
+              icon: Icon(isSearch ? Icons.close : Icons.search))
+        ],
       ),
       body: isLoading
           ? Shimmer_data_terpilah()
@@ -159,64 +189,70 @@ class _Adm_Indikator_kuisionerState extends State<Adm_Indikator_kuisioner> {
 
                     //list data
                     for (int i = 0; i < data.length; i++)
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.indigo,
-                          child: Text((i + 1).toString()),
-                        ),
-                        contentPadding: EdgeInsets.all(0),
-                        title: Container(
-                          margin: EdgeInsets.only(top: 10, bottom: 10),
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: i % 2 == 0
-                                  ? Color.fromARGB(66, 241, 121, 121)
-                                  : Color.fromARGB(66, 241, 205, 121),
-                              borderRadius: BorderRadius.circular(4)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                data[i]["indikator_kuisioner"],
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                      data[i]["indikator_kuisioner"]
+                              .toString()
+                              .toLowerCase()
+                              .contains(cari)
+                          ? ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.indigo,
+                                child: Text((i + 1).toString()),
                               ),
-                              data[i]["komponen_nilai"].length > 0
-                                  ? Opacity(
-                                      opacity: 0.6,
-                                      child: Widget_show_komponen(
-                                        data: data[i]["komponen_nilai"],
-                                      ),
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Laki-laki : ${data[i]['laki_laki']}",
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                        Text(
-                                          "Perempuan :  ${data[i]['perempuan']}",
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                      ],
-                                    )
-                            ],
-                          ),
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            _input(
-                                data[i]["id_indikator_kuisioner"],
-                                data[i]["indikator_kuisioner"],
-                                data[i]["laki_laki"],
-                                data[i]["perempuan"],
-                                data[i]["komponen_nilai"]);
-                          },
-                        ),
-                      )
+                              contentPadding: EdgeInsets.all(0),
+                              title: Container(
+                                margin: EdgeInsets.only(top: 10, bottom: 10),
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: i % 2 == 0
+                                        ? Color.fromARGB(66, 241, 121, 121)
+                                        : Color.fromARGB(66, 241, 205, 121),
+                                    borderRadius: BorderRadius.circular(4)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data[i]["indikator_kuisioner"],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    data[i]["komponen_nilai"].length > 0
+                                        ? Opacity(
+                                            opacity: 0.6,
+                                            child: Widget_show_komponen(
+                                              data: data[i]["komponen_nilai"],
+                                            ),
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Laki-laki : ${data[i]['laki_laki']}",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              Text(
+                                                "Perempuan :  ${data[i]['perempuan']}",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                            ],
+                                          )
+                                  ],
+                                ),
+                              ),
+                              trailing: IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  _input(
+                                      data[i]["id_indikator_kuisioner"],
+                                      data[i]["indikator_kuisioner"],
+                                      data[i]["laki_laki"],
+                                      data[i]["perempuan"],
+                                      data[i]["komponen_nilai"]);
+                                },
+                              ),
+                            )
+                          : Container()
                   ],
                 ),
               ),
