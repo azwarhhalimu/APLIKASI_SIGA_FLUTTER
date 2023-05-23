@@ -31,8 +31,8 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
           id_tahun = tahun[0]["id_tahun"];
           nama_tahun = tahun[0]["tahun"];
         });
+        _getData();
       }
-      ;
     });
   }
 
@@ -76,6 +76,7 @@ class _Admin_preseting_dataState extends State<Admin_preseting_data> {
   @override
   void initState() {
     init();
+    ;
     // TODO: implement initState
     super.initState();
   }

@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:siga2/Admin_siga/AUTENTIFIKASi.dart';
 import 'package:siga2/Admin_siga/Api_admin/admGetLihatDataTerpilah.dart';
+import 'package:siga2/Admin_siga/Input_data/Widget_show_komponen.dart';
 import 'package:siga2/Admin_siga/Login.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Shimmer/Admin_shimmer/Shimmer_admin_home.dart';
@@ -131,25 +132,28 @@ class _Adm_lihat_indikator_kuisionerState
                                 ),
                                 Divider(),
                                 !semua_tahun
-                                    ? Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Expanded(
-                                              child: Text(
-                                                  data[i]["data"]["tahun"])),
-                                          Expanded(
-                                              child: Text(data[i]["data"]
-                                                  ["laki_laki"])),
-                                          Expanded(
-                                              child: Text(data[i]["data"]
-                                                  ["perempuan"])),
-                                          Expanded(
-                                            child: Text(
-                                                "Total : ${data[i]["data"]["total"]}"),
-                                          ),
-                                        ],
-                                      )
+                                    ? (data[i]["komponen_nilai"] != null
+                                        ? Widget_show_komponen(
+                                            data: data[i]["komponen_nilai"])
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Expanded(
+                                                  child: Text(data[i]["data"]
+                                                      ["tahun"])),
+                                              Expanded(
+                                                  child: Text(data[i]["data"]
+                                                      ["laki_laki"])),
+                                              Expanded(
+                                                  child: Text(data[i]["data"]
+                                                      ["perempuan"])),
+                                              Expanded(
+                                                child: Text(
+                                                    "Total : ${data[i]["data"]["total"]}"),
+                                              ),
+                                            ],
+                                          ))
                                     : Column(children: [
                                         for (int j = 0;
                                             j < data[i]["semua_tahun"].length;
