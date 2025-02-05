@@ -5,11 +5,11 @@ import 'package:siga2/Config.dart';
 import "package:http/http.dart" as http;
 
 Future<String> getBeranda() async {
-  Uri uri = Uri.parse(baseUrl("api_web/beranda"));
+  Uri uri = Uri.parse(baseUrl("api/beranda.json"));
   String pesan = "";
   try {
-    var respon = await http.post(uri);
-
+    var respon = await http.get(uri);
+    print(respon.body);
     if (respon.statusCode == 200) {
       return respon.body;
     }

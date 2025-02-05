@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:siga2/Componen/ImageNetwork.dart';
 import 'package:flutter/material.dart';
+import 'package:siga2/Config.dart';
 
 class Lihat_galeri extends StatefulWidget {
   var data;
@@ -81,7 +82,8 @@ class _Lihat_galeriState extends State<Lihat_galeri> {
                   height: double.infinity,
                   child: Center(
                       child: ImageNetwork(
-                          url: widget.data[i]["img_future"],
+                          url: baseUrl("images/galeri?size=400&target=" +
+                              widget.data[i]["id_galeri"]),
                           height_gambar: double.infinity)),
                 ),
             ],
@@ -110,7 +112,9 @@ class _Lihat_galeriState extends State<Lihat_galeri> {
                     child: Opacity(
                       opacity: aktif_foto == i ? 1 : 0.3,
                       child: ImageNetwork(
-                          url: widget.data[i]["img_future"], height_gambar: 70),
+                          url: baseUrl("images/galeri?size=100&target=" +
+                              widget.data[i]["id_galeri"]),
+                          height_gambar: 70),
                     ),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:siga2/Api_http/getGaleri.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
+import 'package:siga2/Config.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Galeri/Lihat_galeri.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,8 +103,10 @@ class _GaleriState extends State<Galeri> {
                     child: Container(
                       margin: EdgeInsets.all(1),
                       width: double.infinity,
-                      child:
-                          ImageNetwork(url: data[i]["img"], height_gambar: 300),
+                      child: ImageNetwork(
+                          url: baseUrl("images/galeri?size=200&target=" +
+                              data[i]["id_galeri"]),
+                          height_gambar: 300),
                     ),
                   ),
               ],

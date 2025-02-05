@@ -4,7 +4,7 @@ import 'package:siga2/Config.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> getKategoriDataTerpilah() async {
-  Uri uri = Uri.parse(baseUrl("api_siga/kategori_data_terpilah"));
+  Uri uri = Uri.parse(baseUrl("api/get-kategori-data-siga.json"));
   try {
     var respon = await http.post(uri);
     if (respon.statusCode == 200) {

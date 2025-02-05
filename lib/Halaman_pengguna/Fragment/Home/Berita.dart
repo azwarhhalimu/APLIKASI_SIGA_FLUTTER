@@ -5,6 +5,7 @@ import 'package:siga2/Api_http/getBeranda.dart';
 import 'package:siga2/Componen/AlertDialog.dart';
 import 'package:siga2/Componen/EncRc4.dart';
 import 'package:siga2/Componen/ImageNetwork.dart';
+import 'package:siga2/Config.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home/Lihat_semua_instansi.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home/Semua_berita.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Part_page/Berita_utama.dart';
@@ -64,6 +65,7 @@ class _BeritaState extends State<Berita> {
             data = jsonDecode(value);
 
             foto_walikota = data["foto_walikota"];
+
             foto_wakil_walikota = data["foto_wakil_walikota"];
             wakil_walikota = data["wakil_walikota"];
             walikota = data["walikota"];
@@ -73,9 +75,9 @@ class _BeritaState extends State<Berita> {
 
             slide_show = data["slide_show"];
             instansi = data["instansi"];
+
             berita_terbaru = data["berita_terbaru"];
             banner = data["banner"];
-
             berita = data["berita"];
           });
         }
@@ -152,7 +154,8 @@ class _BeritaState extends State<Berita> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: ImageNetwork(
-                            url: slide_show[i]["url"],
+                            url: baseUrl(
+                                "images/slide-show?size=400&target=${slide_show[i]['id_slide_show']}"),
                             height_gambar: 90,
                           ),
                         ),
@@ -191,7 +194,9 @@ class _BeritaState extends State<Berita> {
                         List_item_instansi_home(
                           nama_instansi: instansi[i]["nama_instansi"],
                           id_instansi: instansi[i]["id_instansi"],
-                          logo: instansi[i]["logo"],
+                          logo: baseUrl("images/instansi?source=" +
+                              instansi[i]["id_instansi"] +
+                              "&size=100"),
                         ),
                       SizedBox(
                         width: 15,
@@ -232,7 +237,8 @@ class _BeritaState extends State<Berita> {
                                     borderRadius: BorderRadius.circular(10),
                                     child: ImageNetwork(
                                       height_gambar: 70,
-                                      url: foto_walikota,
+                                      url: baseUrl(
+                                          "images/profil-walikota?size=300"),
                                     ),
                                   ),
                                 ),
@@ -262,7 +268,8 @@ class _BeritaState extends State<Berita> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: ImageNetwork(
                                         height_gambar: 70,
-                                        url: foto_wakil_walikota,
+                                        url: baseUrl(
+                                            ("images/profil-wakil-walikota?size=200")),
                                       )),
                                 ),
                                 Text(
@@ -282,7 +289,8 @@ class _BeritaState extends State<Berita> {
                   ),
                 ),
                 Kepala_dinas(
-                    nama_kepala_dinas: kepala_dinas, foto: foto_kepala_dinas),
+                    nama_kepala_dinas: kepala_dinas,
+                    foto: baseUrl("images/profil-kepala-dinas?size=200")),
 
                 Berita_utama(
                   data: berita,
@@ -323,9 +331,11 @@ class _BeritaState extends State<Berita> {
                       for (int i = 0; i < berita_terbaru.length; i++)
                         List_item_berita_home(
                           id_berita: berita_terbaru[i]["id_berita"],
-                          judul_berita: berita_terbaru[i]["judul_berita"],
+                          judul_berita: berita_terbaru[i]["judul"],
                           tanggal: berita_terbaru[i]["tanggal"],
-                          img: berita_terbaru[i]["img"],
+                          img: baseUrl("images/berita?source=" +
+                              berita_terbaru[i]["id_berita"] +
+                              "&size=100"),
                         ),
                       SizedBox(
                         width: 15,
@@ -338,7 +348,8 @@ class _BeritaState extends State<Berita> {
                 ),
                 for (int i = 0; i < banner.length; i++)
                   List_item_banner_home(
-                    url: banner[i]["url"],
+                    url: baseUrl(
+                        ("images/banner?target=${banner[i]['id_banner']}&size=300")),
                   )
               ],
             ),

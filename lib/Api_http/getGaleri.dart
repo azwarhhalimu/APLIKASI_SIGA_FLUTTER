@@ -4,9 +4,10 @@ import 'package:siga2/Config.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> getGaler() async {
-  Uri uri = Uri.parse(baseUrl("api_web/galeri"));
+  Uri uri = Uri.parse(baseUrl("api/galeri.json"));
   try {
-    var respon = await http.post(uri);
+    var respon = await http.get(uri);
+    print(respon.body);
     if (respon.statusCode == 200) {
       return respon.body;
     }

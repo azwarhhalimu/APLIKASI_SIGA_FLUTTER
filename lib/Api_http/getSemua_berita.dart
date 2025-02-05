@@ -4,7 +4,7 @@ import 'package:siga2/Config.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> getSemuaBerita() async {
-  Uri uri = Uri.parse(baseUrl("api_web/semua_berita"));
+  Uri uri = Uri.parse(baseUrl("api/semua_berita"));
   try {
     var respon = await http.post(uri);
     print(respon.body);

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:siga2/Componen/ImageNetwork.dart';
+import 'package:siga2/Config.dart';
 import 'package:siga2/Halaman_pengguna/Fragment/Home/Baca_berita.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,7 @@ class Berita_utama extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      data[i]["judul_berita"],
+                      data[i]["judul"],
                       style:
                           TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
                     ),
@@ -61,7 +62,10 @@ class Berita_utama extends StatelessWidget {
                   height: 80,
                   child: ClipRRect(
                       child: ImageNetwork(
-                          url: data[i]["img"], height_gambar: 100)),
+                          url: baseUrl('images/berita?source=' +
+                              data[i]['id_berita'] +
+                              "&size=100"),
+                          height_gambar: 100)),
                 ),
               ),
             )

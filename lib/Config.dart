@@ -4,17 +4,19 @@ import 'dart:math';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:siga2/Componen/Rc4.dart';
 import 'package:siga2/Componen/SharedPref.dart';
-import 'package:encrypt/encrypt.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'package:encrypt/encrypt.dart';
 
-String domain = "https://dp3a.baubaukota.go.id/";
+String domain = "http://localhost:2000/";
 String baseUrl(String url) {
-  return domain + "index.php/" + url;
+  return domain + url;
 }
+// String domain = "https://dp3a.baubaukota.go.id/";
+// String baseUrl(String url) {
+//   return domain + "index.php/" + url;
+// }
 
 String VERSI = "1.0.0";
 String FLUTTER_VERSI = "3.7.5";
